@@ -6,6 +6,7 @@ import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
 import Main from 'Main';
 import Footer from 'Footer';
+import Copyright from 'Copyright';
 
 class VdnApp extends Component {
   state = {
@@ -25,6 +26,10 @@ class VdnApp extends Component {
     });
   };
 
+  renderLeftFooter = () => {
+    return <Copyright />;
+  };
+
   render() {
     const {classes} = this.props;
     const {sidebarOpen} = this.state;
@@ -36,7 +41,7 @@ class VdnApp extends Component {
           Should be content
         </Sidebar>
         <Main>some children</Main>
-        <Footer />
+        <Footer left={this.renderLeftFooter} />
       </div>
     );
   }
