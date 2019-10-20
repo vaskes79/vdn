@@ -1,10 +1,12 @@
 const styles = theme => ({
   root: {
+    flexGrow: 1,
     background: theme.palette.background.paper,
   },
-  div: {
-    color: 'red',
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
+  fab: {},
 });
 
 export default styles;
