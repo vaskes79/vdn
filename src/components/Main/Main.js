@@ -26,7 +26,12 @@ Main.propTypes = {
 };
 
 Main.defaultProps = {
-  video: () => (
+  video: DemoIframe,
+  controls: () => <h2>controls</h2>,
+};
+
+function DemoIframe() {
+  return (
     // eslint-disable-next-line
     <iframe
       width="100%"
@@ -36,8 +41,7 @@ Main.defaultProps = {
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
     />
-  ),
-  controls: () => <h2>controls</h2>,
-};
+  );
+}
 
 export default withStyles(styles)(Main);
