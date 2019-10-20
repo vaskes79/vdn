@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {CssBaseline} from '@material-ui/core';
 
 import * as serviceWorker from './serviceWorker';
 import './index.css';
@@ -10,7 +11,9 @@ const theme = createMuiTheme();
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <VdnApp />
+    <CssBaseline>
+      <VdnApp />
+    </CssBaseline>
   </ThemeProvider>,
   document.getElementById('root'),
 );
