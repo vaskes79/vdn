@@ -30,7 +30,9 @@ class VdnApp extends Component {
     return (
       <div className={classes.VdnApp}>
         <NavBar onOpenSidebar={this.toggleSidebar} />
-        <Sidebar open={sidebarOpen} onCloseSidebar={this.toggleSidebar} />
+        <Sidebar open={sidebarOpen} onCloseSidebar={this.toggleSidebar}>
+          Should be content
+        </Sidebar>
       </div>
     );
   }
