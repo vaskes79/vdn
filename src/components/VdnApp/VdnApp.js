@@ -1,8 +1,14 @@
 import React from 'react';
-import './VdnApp.css';
+import {withStyles} from '@material-ui/core/styles';
+import styles from './styles';
+import NavBar from 'NavBar';
 
-function VdnApp() {
-  return <div className="VdnApp">VdnApp</div>;
+function VdnApp({classes}) {
+  return (
+    <div className={classes.VdnApp}>
+      <NavBar /> VdnApp
+    </div>
+  );
 }
 
-export default VdnApp;
+export default withStyles(styles)(VdnApp);
