@@ -9,9 +9,12 @@ const styles = theme => ({
     width: '100%',
   },
   wrap: {},
-  left: {},
   right: {
     textAlign: 'right',
+  },
+  infoBtn: {},
+  infoIcon: {
+    color: theme.palette.grey[500],
   },
 });
 

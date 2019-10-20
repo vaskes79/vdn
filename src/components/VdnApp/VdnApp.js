@@ -6,7 +6,6 @@ import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
 import Main from 'Main';
 import Footer from 'Footer';
-import Copyright from 'Copyright';
 
 class VdnApp extends Component {
   state = {
@@ -26,8 +25,8 @@ class VdnApp extends Component {
     });
   };
 
-  renderLeftFooter = () => {
-    return <Copyright />;
+  handlerDialogInfo = e => {
+    console.log('handlerDialogInfo');
   };
 
   render() {
@@ -41,7 +40,7 @@ class VdnApp extends Component {
           Should be content
         </Sidebar>
         <Main>some children</Main>
-        <Footer left={this.renderLeftFooter} />
+        <Footer onOpenInfo={this.handlerDialogInfo} />
       </div>
     );
   }
