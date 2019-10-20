@@ -4,6 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import styles from './styles';
 import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
+import Main from 'Main';
 
 class VdnApp extends Component {
   state = {
@@ -33,6 +34,7 @@ class VdnApp extends Component {
         <Sidebar open={sidebarOpen} onCloseSidebar={this.toggleSidebar}>
           Should be content
         </Sidebar>
+        <Main>some children</Main>
       </div>
     );
   }
