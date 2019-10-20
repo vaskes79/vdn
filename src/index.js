@@ -9,6 +9,8 @@ import VdnApp from 'VdnApp';
 
 const theme = createMuiTheme();
 
+console.log(theme);
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline>

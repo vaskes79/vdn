@@ -5,6 +5,7 @@ import styles from './styles';
 import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
 import Main from 'Main';
+import Footer from 'Footer';
 
 class VdnApp extends Component {
   state = {
@@ -35,6 +36,7 @@ class VdnApp extends Component {
           Should be content
         </Sidebar>
         <Main>some children</Main>
+        <Footer />
       </div>
     );
   }
