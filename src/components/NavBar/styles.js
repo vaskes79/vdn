@@ -6,7 +6,13 @@ const styles = theme => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  fab: {},
+  fab: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
+  title: {
+    flexGrow: 1,
+  },
 });
 
 export default styles;

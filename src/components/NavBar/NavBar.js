@@ -21,10 +21,14 @@ const NavBar = ({classes}) => (
           aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" color="inherit">
+        <Typography variant="h6" color="inherit" className={classes.title}>
           Video Notes
         </Typography>
-        <Fab color="secondary" aria-label="add" className={classes.fab}>
+        <Fab
+          color="secondary"
+          aria-label="add"
+          className={classes.fab}
+          size="small">
           <AddIcon />
         </Fab>
       </Toolbar>
