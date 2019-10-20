@@ -5,6 +5,7 @@ import styles from './styles';
 import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
 import Main from 'Main';
+import Footer from 'Footer';
 
 class VdnApp extends Component {
   state = {
@@ -24,6 +25,10 @@ class VdnApp extends Component {
     });
   };
 
+  handlerDialogInfo = e => {
+    console.log('handlerDialogInfo');
+  };
+
   render() {
     const {classes} = this.props;
     const {sidebarOpen} = this.state;
@@ -35,6 +40,7 @@ class VdnApp extends Component {
           Should be content
         </Sidebar>
         <Main>some children</Main>
+        <Footer onOpenInfo={this.handlerDialogInfo} />
       </div>
     );
   }

@@ -2,9 +2,7 @@ const styles = theme => ({
   root: {
     background: theme.palette.background.paper,
   },
-  VdnApp: {
-    color: 'red',
-  },
+  VdnApp: {},
 });
 
 export default styles;
