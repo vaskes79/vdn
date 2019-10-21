@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 
 import styles from './styles';
-import NavBar from 'NavBar';
-import Sidebar from 'Sidebar';
-import {Main, MainLeft, MainRight} from 'Main';
-import Video from 'Video';
-import Footer from 'Footer';
+import NavBar from 'components/NavBar';
+import Sidebar from 'components/Sidebar';
+import {Main, MainLeft, MainRight} from 'components/Main';
+import Video from 'components/Video';
+import Footer from 'components/Footer';
 
 class VdnApp extends Component {
   state = {

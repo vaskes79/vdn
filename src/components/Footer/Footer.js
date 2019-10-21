@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Info from '@material-ui/icons/Info';
 
 import styles from './styles';
-import Copyright from 'Copyright';
+import Copyright from 'components/Copyright';
 
 const Footer = ({children, classes, onOpenInfo, left, right}) => (
   <div className={classes.root}>
