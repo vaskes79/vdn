@@ -3,9 +3,6 @@ const styles = theme => ({
     flexGrow: 1,
     background: theme.palette.background.paper,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
   fab: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
