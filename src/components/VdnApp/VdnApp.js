@@ -4,7 +4,7 @@ import {withStyles} from '@material-ui/core/styles';
 import styles from './styles';
 import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
-import Main from 'Main';
+import {Main, MainLeft, MainRight} from 'Main';
 import Video from 'Video';
 import Footer from 'Footer';
 
@@ -40,8 +40,12 @@ class VdnApp extends Component {
         <Sidebar open={sidebarOpen} onCloseSidebar={this.toggleSidebar}>
           Should be content
         </Sidebar>
-        <Video />
-        <Main>some children</Main>
+        <Main>
+          <MainLeft>
+            <Video />
+          </MainLeft>
+          <MainRight>Right Panel</MainRight>
+        </Main>
         <Footer onOpenInfo={this.handlerDialogInfo} />
       </div>
     );
