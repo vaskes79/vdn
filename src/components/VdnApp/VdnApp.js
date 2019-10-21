@@ -5,6 +5,7 @@ import styles from './styles';
 import NavBar from 'NavBar';
 import Sidebar from 'Sidebar';
 import Main from 'Main';
+import Video from 'Video';
 import Footer from 'Footer';
 
 class VdnApp extends Component {
@@ -39,6 +40,7 @@ class VdnApp extends Component {
         <Sidebar open={sidebarOpen} onCloseSidebar={this.toggleSidebar}>
           Should be content
         </Sidebar>
+        <Video />
         <Main>some children</Main>
         <Footer onOpenInfo={this.handlerDialogInfo} />
       </div>
