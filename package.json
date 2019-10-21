@@ -9,6 +9,7 @@
     "@mdi/react": "^1.2.1",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-player": "^1.13.0",
     "react-scripts": "3.2.0"
   },
   "scripts": {
