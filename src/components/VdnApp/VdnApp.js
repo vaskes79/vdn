@@ -26,10 +26,6 @@ class VdnApp extends Component {
     });
   };
 
-  handlerDialogInfo = e => {
-    console.log('handlerDialogInfo');
-  };
-
   render() {
     const {classes} = this.props;
     const {sidebarOpen} = this.state;
@@ -46,7 +42,7 @@ class VdnApp extends Component {
           </MainLeft>
           <MainRight>Right Panel</MainRight>
         </Main>
-        <Footer onOpenInfo={this.handlerDialogInfo} />
+        <Footer />
       </div>
     );
   }
