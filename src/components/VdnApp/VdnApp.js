@@ -2,46 +2,30 @@ import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 
 import styles from './styles';
-import NavBar from 'NavBar';
-import Sidebar from 'Sidebar';
-import Main from 'Main';
-import Footer from 'Footer';
+import NavBar from 'components/NavBar';
+import {Main, MainLeft, MainRight} from 'components/Main';
+import Video from 'components/Video';
+import Footer from 'components/Footer';
 
 class VdnApp extends Component {
-  state = {
-    sidebarOpen: false,
-  };
+  state = {};
 
-  toggleSidebar = event => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
-    this.setState({
-      sidebarOpen: !this.state.sidebarOpen,
-    });
-  };
-
-  handlerDialogInfo = e => {
-    console.log('handlerDialogInfo');
+  sidebarContent = () => {
+    return <h1>Sidbar Content</h1>;
   };
 
   render() {
-    const {classes} = this.props;
-    const {sidebarOpen} = this.state;
-
     return (
-      <div className={classes.VdnApp}>
-        <NavBar onOpenSidebar={this.toggleSidebar} />
-        <Sidebar open={sidebarOpen} onCloseSidebar={this.toggleSidebar}>
-          Should be content
-        </Sidebar>
-        <Main>some children</Main>
-        <Footer onOpenInfo={this.handlerDialogInfo} />
-      </div>
+      <>
+        <NavBar sidebarContent={this.sidebarContent} />
+        <Main>
+          <MainLeft>
+            <Video />
+          </MainLeft>
+          <MainRight>Right Panel</MainRight>
+        </Main>
+        <Footer />
+      </>
     );
   }
 }
