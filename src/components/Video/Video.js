@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import ReactPlayer from 'react-player';
 
 import styles from './styles';
 
-const Video = ({classes, src, playing}) => (
+const Video = ({ classes, src, playing }) => (
   <div className={classes.root}>
     <ReactPlayer
       url={src}
@@ -19,13 +19,12 @@ const Video = ({classes, src, playing}) => (
 
 Video.propTypes = {
   src: PropTypes.string.isRequired,
-  provider: PropTypes.oneOf(['youtube', 'vimeo']).isRequired,
-  playing: PropTypes.bool,
+  playing: PropTypes.bool
 };
 
 Video.defaultProps = {
   src: 'https://youtu.be/cCOL7MC4Pl0',
-  playing: false,
+  playing: false
 };
 
 export default withStyles(styles)(Video);
