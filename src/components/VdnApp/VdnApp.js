@@ -11,16 +11,12 @@ import Notes from 'components/Notes';
 class VdnApp extends Component {
   state = {};
 
-  sidebarContent = () => {
-    return <h1>Sidbar Content</h1>;
-  };
-
   render() {
     const { data } = this.props;
 
     return (
       <>
-        <NavBar sidebarContent={this.sidebarContent} />
+        <NavBar videoItems={data.videoList} />
         <Main>
           <MainLeft>
             <Video />
