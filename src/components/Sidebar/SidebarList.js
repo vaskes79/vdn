@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { List } from '@material-ui/core';
 
 import styles from './styles';
+import SidebarItem from './SidebarItem';
 
 const SidebarList = ({ classes, videoItems }) => (
-  <nav className={classes.SidebarList} aria-label="navigation on added video">
-    <code>{JSON.stringify(videoItems)}</code>
-  </nav>
+  <List component="nav" className={classes.SidebarList} aria-label="navigation on added video">
+    {videoItems.map(item => (
+      <SidebarItem key={item.id} data={item} />
+    ))}
+  </List>
 );
 
 SidebarList.propTypes = {
