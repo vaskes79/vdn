@@ -25,3 +25,16 @@ export const visuallyHidden = {
   clip: 'rect(0 0 0 0)',
   overflow: 'hidden'
 };
+
+export const formatTime = duration => {
+  var ms = parseInt(duration * 1000),
+    s = parseInt((ms / 1000) % 60),
+    m = parseInt((ms / (1000 * 60)) % 60),
+    h = parseInt((ms / (1000 * 60 * 60)) % 24);
+
+  h = h < 10 ? '0' + h : h;
+  m = m < 10 ? '0' + m : m;
+  s = s < 10 ? '0' + s : s;
+
+  return h + ':' + m + ':' + s;
+};
