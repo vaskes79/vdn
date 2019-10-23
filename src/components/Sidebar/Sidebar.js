@@ -1,26 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 
 import styles from './styles';
 
-const Sidebar = ({children, classes, content}) => {
+const Sidebar = ({ children, classes, content }) => {
   const [state, setState] = React.useState({
-    open: false,
+    open: false
   });
 
   const toggleSidebar = event => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
 
-    setState({open: !state.open});
+    setState({ open: !state.open });
   };
 
   return (
@@ -30,17 +27,19 @@ const Sidebar = ({children, classes, content}) => {
         className={classes.menuButton}
         color="inherit"
         aria-label="menu"
-        onClick={toggleSidebar}>
+        onClick={toggleSidebar}
+      >
         <MenuIcon />
       </IconButton>
 
       <div className={classes.root}>
         <Drawer
           classes={{
-            paper: classes.paper,
+            paper: classes.paper
           }}
           open={state.open}
-          onClose={toggleSidebar}>
+          onClose={toggleSidebar}
+        >
           <div className={classes.content}>{content ? content() : null}</div>
         </Drawer>
       </div>
@@ -49,7 +48,7 @@ const Sidebar = ({children, classes, content}) => {
 };
 
 Sidebar.propTypes = {
-  content: PropTypes.func.isRequired,
+  content: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Sidebar);
