@@ -1,13 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
 
 import styles from './styles';
+import SidebarList from './SidebarList';
 
-const Sidebar = ({ children, classes, content }) => {
+const Sidebar = ({ children, classes, videoItems }) => {
   const [state, setState] = React.useState({
     open: false
   });
@@ -40,15 +40,15 @@ const Sidebar = ({ children, classes, content }) => {
           open={state.open}
           onClose={toggleSidebar}
         >
-          <div className={classes.content}>{content ? content() : null}</div>
+          <div className={classes.content}>
+            <SidebarList videoItems={videoItems} />
+          </div>
         </Drawer>
       </div>
     </>
   );
 };
 
-Sidebar.propTypes = {
-  content: PropTypes.func.isRequired
-};
+Sidebar.propTypes = {};
 
 export default withStyles(styles)(Sidebar);

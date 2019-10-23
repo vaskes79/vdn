@@ -5,27 +5,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import styles from './styles';
-
-const msToTime = duration => {
-  var ms = parseInt(duration * 1000),
-    s = parseInt((ms / 1000) % 60),
-    m = parseInt((ms / (1000 * 60)) % 60),
-    h = parseInt((ms / (1000 * 60 * 60)) % 24);
-
-  h = h < 10 ? '0' + h : h;
-  m = m < 10 ? '0' + m : m;
-  s = s < 10 ? '0' + s : s;
-
-  return h + ':' + m + ':' + s;
-};
+import { formatTime } from 'components/utils';
 
 const NoteItem = ({ classes, note: { id, title, time } }) => (
   <ListItem
     button
     // selected={selectedIndex === 2}
+    dense
     onClick={event => console.log(event.target)}
   >
-    <ListItemText className={classes.title} primary={msToTime(time)} secondary={title} />
+    <ListItemText className={classes.title} primary={formatTime(time)} secondary={title} />
     <ListItemSecondaryAction>
       <IconButton edge="end" aria-label="delete">
         <EditIcon />
