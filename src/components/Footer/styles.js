@@ -6,16 +6,12 @@ const styles = theme => ({
     position: 'fixed',
     bottom: 0,
     left: 0,
-    width: '100%',
+    width: '100%'
   },
   wrap: {},
   right: {
-    textAlign: 'right',
-  },
-  infoBtn: {},
-  infoIcon: {
-    color: theme.palette.grey[500],
-  },
+    textAlign: 'right'
+  }
 });
 
 export default styles;
