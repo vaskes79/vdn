@@ -7,6 +7,10 @@ const styles = theme => ({
   infoBtn: {},
   infoIcon: {
     color: theme.palette.grey[500]
+  },
+  confirmQuestion: {
+    flexGrow: 1,
+    paddingLeft: theme.spacing(2)
   }
 });
 
