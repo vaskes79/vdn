@@ -4,6 +4,7 @@ import { ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@ma
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 
 import styles from './styles';
+import { Confirm as DeleteConfirm } from 'components/Dialog';
 
 const onEdit = () => console.log('edit action');
 const onDelete = () => console.log('delete action');
@@ -16,9 +17,7 @@ const SidebarItem = ({ classes, data: { src, id, title } }) => (
       <IconButton edge="end" aria-label="delete" onClick={onEdit}>
         <EditIcon />
       </IconButton>
-      <IconButton edge="end" aria-label="delete" onClick={onDelete}>
-        <DeleteIcon />
-      </IconButton>
+      <DeleteConfirm id={id} title={title} description={src} />
     </ListItemSecondaryAction>
   </ListItem>
 );
