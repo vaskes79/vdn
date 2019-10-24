@@ -33,6 +33,7 @@ const AddVideo = ({ classes }) => {
     /* TODO create method for update storage */
     if (action === 'submit') console.log(newVideo);
     if (action === 'cancel') console.log('cancel');
+    if (action === 'close') console.log('close');
     /* end */
 
     setValues({ ...INIT_STATE });
@@ -53,7 +54,13 @@ const AddVideo = ({ classes }) => {
       >
         <AddIcon />
       </Fab>
-      <Dialog open={values.open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        maxWidth="sm"
+        open={values.open}
+        onClose={handleClose('close')}
+        aria-labelledby="form-dialog-title"
+        fullWidth
+      >
         <DialogTitle id="form-dialog-title">Add Video</DialogTitle>
         <DialogContent>
           <DialogContentText>

@@ -7,14 +7,14 @@ import {
   Dialog,
   IconButton,
   DialogContent,
-  DialogContentText,
-  Typography
+  Typography,
+  TextField
 } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import styles from './styles';
 
-const Confirm = ({ classes, id, title, description }) => {
+const Edit = ({ classes, id, title, description, label }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -22,23 +22,27 @@ const Confirm = ({ classes, id, title, description }) => {
   };
 
   const handleOk = () => {
-    console.log('Confirm handleOk ');
+    console.log('Edit handleOk ');
     setOpen(false);
   };
 
   const handleCancel = () => {
-    console.log('Confirm handleCancel ');
+    console.log('Edit handleCancel ');
     setOpen(false);
   };
 
   const handleEntering = () => {
-    console.log('Confirm handleEntering ');
+    console.log('Edit handleEntering ');
+  };
+
+  const handleChange = name => ({ target: { value } }) => {
+    console.log(value);
   };
 
   return (
     <>
       <IconButton edge="end" aria-label="delete" onClick={handleClickOpen}>
-        <DeleteIcon />
+        <EditIcon />
       </IconButton>
 
       <Dialog
@@ -51,7 +55,18 @@ const Confirm = ({ classes, id, title, description }) => {
       >
         <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{description}</DialogContentText>
+          <TextField
+            id="title"
+            name="title"
+            label={label}
+            multiline
+            defaultValue={description}
+            onChange={handleChange('title')}
+            className={classes.textField}
+            rowsMax={4}
+            fullWidth
+            margin="normal"
+          />
         </DialogContent>
         <DialogActions>
           <Typography variant="button" className={classes.confirmQuestion} color="secondary">
@@ -69,4 +84,4 @@ const Confirm = ({ classes, id, title, description }) => {
   );
 };
 
-export default withStyles(styles)(Confirm);
+export default withStyles(styles)(Edit);

@@ -36,7 +36,13 @@ const Info = ({ classes }) => {
       >
         <InfoIcon className={classes.infoIcon} />
       </IconButton>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        maxWidth="sm"
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+        fullWidth
+      >
         <DialogTitle id="form-dialog-title">Info About Project</DialogTitle>
         <DialogContent>
           <About />
