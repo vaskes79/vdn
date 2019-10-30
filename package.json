@@ -7,6 +7,7 @@
     "@material-ui/icons": "^4.5.1",
     "@mdi/js": "^4.5.95",
     "@mdi/react": "^1.2.1",
+    "idb": "^4.0.5",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-player": "^1.13.0",

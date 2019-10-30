@@ -12,8 +12,8 @@ class VdnApp extends Component {
   state = {};
 
   render() {
-    const { data } = this.props;
-
+    const { data, db } = this.props;
+    db.init();
     return (
       <>
         <NavBar videoItems={data.videoList} />

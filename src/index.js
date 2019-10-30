@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import store from 'store';
+import IndexedDB from 'indexedDB';
 
 import * as serviceWorker from './serviceWorker';
 import './index.css';
@@ -15,7 +16,7 @@ const theme = createMuiTheme();
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline>
-      <VdnApp data={store} />
+      <VdnApp db={new IndexedDB({})} data={store} />
     </CssBaseline>
   </ThemeProvider>,
   document.getElementById('root')
