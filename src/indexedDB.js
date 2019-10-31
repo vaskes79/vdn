@@ -1,63 +1,78 @@
-class IndexDBConnector {
-  constructor({ DB_NAME, DB_VER }) {
-    this.indexedDB =
-      window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+import { openDB } from 'idb';
 
-    this.DB_NAME = DB_NAME || 'VDN';
-    this.DB_VER = DB_VER || 1;
+const setupDB = async () => {
+  let db = await openDB('VDN', 1, {
+    upgrade(db) {
+      if (!db.objectStoreNames.contains('settings')) {
+        let settings = db.createObjectStore('settings', {
+          keyPath: 'id',
+          autoIncrement: true
+        });
+
+        settings.createIndex('by_name', 'name', { unique: true });
+        settings.add({
+          name: 'html',
+          value: true,
+          label: 'html',
+          description: 'using for activate deactivate button for copy html notes'
+        });
+        settings.add({
+          name: 'md',
+          value: true,
+          label: 'markdown',
+          description: 'using for activate deactivate button for copy markdown notes'
+        });
+        settings.add({
+          name: 'txt',
+          value: true,
+          label: 'text',
+          description: 'using for, activate deactivate button for copy text notes'
+        });
+        settings.add({
+          name: 'time_offset',
+          value: 3,
+          label: 'time offset',
+          description:
+            'using for set time offset seconds for saved current time video, accessible value 0, 3, 5, 10, default value 3 seconds'
+        });
+      }
+      if (!db.objectStoreNames.contains('videoList')) {
+        db.createObjectStore('videoList', {
+          keyPath: 'id',
+          autoIncrement: true
+        });
+      }
+      if (!db.objectStoreNames.contains('videoNotes')) {
+        db.createObjectStore('videoNotes', {
+          keyPath: 'id',
+          autoIncrement: true
+        });
+      }
+    }
+  });
+  return db;
+};
+
+class IndexDBConnector {
+  constructor() {
+    this.db = setupDB();
   }
 
-  error = e => {
-    console.log(`error: ${e}`);
-  };
+  setSettings = async (name, value) => {
+    const db = await this.db;
+    const tx = db.transaction('settings', 'readwrite');
+    const store = tx.objectStore('settings');
+    const index = store.index('by_name');
 
-  upgrade = e => {
-    // Save the IDBDatabase interface
-    this.db = e.target.result;
-
-    // Create an objectStore for this database
-    // var objectStore = db.createObjectStore('settings', { keyPath: 'id', autoIncrement: true });
-    if (!this.db.objectStoreNames.contains('settings')) {
-      let objectStore = this.db.createObjectStore('settings', {
-        keyPath: 'name',
-        autoIncrement: true
-      });
+    try {
+      const reqObj = await index.get(name);
+      const newObj = { ...reqObj, value };
+      await store.put(newObj);
+      await tx.complete;
+      console.log(`setSettings ${name} was changed to ${value}`);
+    } catch (err) {
+      console.log('setSettings error', err.message);
     }
-  };
-
-  success = async e => {
-    console.log(`success: `, e.target.result);
-
-    this.db = await e.target.result;
-  };
-
-  setSettings = ({ name = 'html', value = true }) => {
-    let setup = {
-      name,
-      value,
-      id: 'id',
-      created: new Date()
-    };
-    console.log('this.db = ', this.db);
-
-    let transaction = this.db.transaction(['settings'], 'readwrite');
-    let store = transaction.objectStore('settings');
-    let request = store.add(setup);
-    request.onsuccess = e => console.log(e.target.result);
-    request.onerror = e => console.log(e);
-  };
-
-  init = () => {
-    if (!this.indexedDB) {
-      console.log(
-        "Your browser doesn't support a stable version of IndexedDB. Such and such feature will not be available."
-      );
-    }
-    var request = this.indexedDB.open(this.DB_NAME, this.DB_VER);
-
-    request.onupgradeneeded = this.upgrade;
-    request.onsuccess = this.success;
-    request.onerror = this.error;
   };
 }
 
