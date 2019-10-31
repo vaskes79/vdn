@@ -85,6 +85,25 @@ class IndexDBConnector {
       console.log('setSettings error', err.message);
     }
   };
+
+  addNote = async (url, title, time) => {
+    const db = await this.db;
+    const tx = db.transaction('vdnNotes', 'readwrite');
+    const vdnNotesStore = tx.objectStore('vdnNotes');
+    const vdnNoteItem = {
+      title,
+      url,
+      time
+    };
+
+    try {
+      await vdnNotesStore.add(vdnNoteItem);
+      await tx.complete;
+      console.log(`addVideo ${title} url ${url}`);
+    } catch (err) {
+      console.log('setSettings error', err.message);
+    }
+  };
 }
 
 export default IndexDBConnector;
