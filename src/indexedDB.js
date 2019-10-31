@@ -8,8 +8,8 @@ const setupDB = async () => {
           keyPath: 'id',
           autoIncrement: true
         });
-
         settings.createIndex('by_name', 'name', { unique: true });
+
         settings.add({
           name: 'html',
           value: true,
@@ -36,16 +36,36 @@ const setupDB = async () => {
             'using for set time offset seconds for saved current time video, accessible value 0, 3, 5, 10, default value 3 seconds'
         });
       }
+
+      const url = 'https://youtu.be/cCOL7MC4Pl0';
+      const title = 'Видео инструкция';
+
       if (!db.objectStoreNames.contains('videoList')) {
-        db.createObjectStore('videoList', {
+        const videoList = db.createObjectStore('videoList', {
           keyPath: 'id',
           autoIncrement: true
         });
+
+        videoList.createIndex('by_title', 'title');
+        videoList.createIndex('by_url', 'url', { unique: true });
+
+        videoList.add({
+          title,
+          url
+        });
       }
+
       if (!db.objectStoreNames.contains('videoNotes')) {
-        db.createObjectStore('videoNotes', {
-          keyPath: 'id',
+        const videoNotes = db.createObjectStore('videoNotes', {
+          keyPath: 'url',
           autoIncrement: true
+        });
+
+        videoNotes.createIndex('by_url', 'url', { unique: true });
+
+        videoNotes.add({
+          url,
+          notes: []
         });
       }
     }
