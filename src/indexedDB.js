@@ -83,7 +83,7 @@ class IndexDBConnector {
       await tx.complete;
       console.log(`addVideo ${title} url ${url}`);
     } catch (err) {
-      console.log('setSettings error', err.message);
+      console.log('addVideo error', err.message);
     }
   };
 
@@ -100,9 +100,9 @@ class IndexDBConnector {
     try {
       await vdnNotesStore.add(vdnNoteItem);
       await tx.complete;
-      console.log(`addVideo ${title} url ${url}`);
+      console.log(`addNote ${title} with url ${url}`);
     } catch (err) {
-      console.log('setSettings error', err.message);
+      console.log('addNote error', err.message);
     }
   };
 
@@ -116,7 +116,7 @@ class IndexDBConnector {
       await tx.complete;
       console.log(`getVideoList return ${videoList}`, videoList);
     } catch (err) {
-      console.log('setSettings error', err.message);
+      console.log('getVideoList error', err.message);
     }
   };
 
@@ -134,9 +134,9 @@ class IndexDBConnector {
         notes = await vdnNotesStore.getAll();
       }
       await tx.complete;
-      console.log(`getNotesList for url ${url}: `, notes);
+      console.log(`getNoteList for url ${url}: `, notes);
     } catch (err) {
-      console.log('setSettings error', err.message);
+      console.log('getNoteList error', err.message);
     }
   };
 }
