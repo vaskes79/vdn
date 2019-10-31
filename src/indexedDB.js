@@ -1,11 +1,12 @@
 import { openDB } from 'idb';
+import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from './constants';
 
 const setupDB = async ({ settingsStore, demoVideo }) => {
-  let db = await openDB('VDN', 1, {
+  let db = await openDB(NAME_DB, VER_DB, {
     upgrade(db) {
-      if (!db.objectStoreNames.contains('vdnSettings')) {
+      if (!db.objectStoreNames.contains(VDN_SETTINGS)) {
         const { html, md, txt, time_offset } = settingsStore;
-        let settings = db.createObjectStore('vdnSettings', {
+        let settings = db.createObjectStore(VDN_SETTINGS, {
           keyPath: 'id',
           autoIncrement: true
         });
@@ -16,9 +17,9 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
         settings.add(time_offset);
       }
 
-      if (!db.objectStoreNames.contains('vdnList')) {
+      if (!db.objectStoreNames.contains(VDN_LIST)) {
         const { url, title } = demoVideo;
-        const videoList = db.createObjectStore('vdnList', {
+        const videoList = db.createObjectStore(VDN_LIST, {
           keyPath: 'id',
           autoIncrement: true
         });
@@ -30,9 +31,9 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
         });
       }
 
-      if (!db.objectStoreNames.contains('vdnNotes')) {
+      if (!db.objectStoreNames.contains(VDN_NOTES)) {
         const { notes } = demoVideo;
-        const videoNotes = db.createObjectStore('vdnNotes', {
+        const videoNotes = db.createObjectStore(VDN_NOTES, {
           keyPath: 'id',
           autoIncrement: true
         });
@@ -53,8 +54,8 @@ class IndexDBConnector {
 
   setSettings = async (name, value) => {
     const db = await this.db;
-    const tx = db.transaction('vdnSettings', 'readwrite');
-    const store = tx.objectStore('vdnSettings');
+    const tx = db.transaction(VDN_SETTINGS, 'readwrite');
+    const store = tx.objectStore(VDN_SETTINGS);
     const index = store.index('by_name');
 
     try {
@@ -70,8 +71,8 @@ class IndexDBConnector {
 
   addVideo = async (title, url) => {
     const db = await this.db;
-    const tx = db.transaction('vdnList', 'readwrite');
-    const vdnListStore = tx.objectStore('vdnList');
+    const tx = db.transaction(VDN_LIST, 'readwrite');
+    const vdnListStore = tx.objectStore(VDN_LIST);
     const vdnItem = {
       title,
       url
@@ -88,8 +89,8 @@ class IndexDBConnector {
 
   addNote = async (url, title, time) => {
     const db = await this.db;
-    const tx = db.transaction('vdnNotes', 'readwrite');
-    const vdnNotesStore = tx.objectStore('vdnNotes');
+    const tx = db.transaction(VDN_NOTES, 'readwrite');
+    const vdnNotesStore = tx.objectStore(VDN_NOTES);
     const vdnNoteItem = {
       title,
       url,
@@ -100,6 +101,20 @@ class IndexDBConnector {
       await vdnNotesStore.add(vdnNoteItem);
       await tx.complete;
       console.log(`addVideo ${title} url ${url}`);
+    } catch (err) {
+      console.log('setSettings error', err.message);
+    }
+  };
+
+  getVideoList = async () => {
+    const db = await this.db;
+    const tx = db.transaction(VDN_LIST, 'readonly');
+    const vdnListStore = tx.objectStore(VDN_LIST);
+
+    try {
+      let videoList = await vdnListStore.getAll();
+      await tx.complete;
+      console.log(`getVideoList return ${videoList}`, videoList);
     } catch (err) {
       console.log('setSettings error', err.message);
     }
