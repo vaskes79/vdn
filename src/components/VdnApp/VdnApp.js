@@ -10,20 +10,9 @@ import Notes from 'components/Notes';
 import { withDBContext } from 'db';
 
 class VdnApp extends Component {
-  state = {
-    videoList: [],
-    videoNotes: []
-  };
-
-  componentDidMount() {
-    const { db } = this.props;
-    db.getVideoList().then(videoList => this.setState({ videoList }));
-    db.getNoteList().then(videoNotes => this.setState({ videoNotes }));
-  }
+  state = {};
 
   render() {
-    const { videoList, videoNotes } = this.state;
-
     return (
       <>
         <NavBar />
@@ -32,7 +21,7 @@ class VdnApp extends Component {
             <Video />
           </MainLeft>
           <MainRight>
-            <Notes notes={videoNotes} />
+            <Notes />
           </MainRight>
         </Main>
         <Footer />
