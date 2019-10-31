@@ -115,6 +115,7 @@ class IndexDBConnector {
       let videoList = await vdnListStore.getAll();
       await tx.complete;
       console.log(`getVideoList return ${videoList}`, videoList);
+      return videoList;
     } catch (err) {
       console.log('getVideoList error', err.message);
     }
@@ -135,6 +136,7 @@ class IndexDBConnector {
       }
       await tx.complete;
       console.log(`getNoteList for url ${url}: `, notes);
+      return notes;
     } catch (err) {
       console.log('getNoteList error', err.message);
     }

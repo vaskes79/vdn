@@ -9,18 +9,29 @@ import Footer from 'components/Footer';
 import Notes from 'components/Notes';
 
 class VdnApp extends Component {
-  state = {};
+  state = {
+    videoList: [],
+    videoNotes: []
+  };
+
+  componentDidMount() {
+    const { db } = this.props;
+    db.getVideoList().then(videoList => this.setState({ videoList }));
+    db.getNoteList().then(videoNotes => this.setState({ videoNotes }));
+  }
+
   render() {
-    const { data, db } = this.props;
+    const { videoList, videoNotes } = this.state;
+
     return (
       <>
-        <NavBar videoItems={data.videoList} />
+        <NavBar videoItems={videoList} />
         <Main>
           <MainLeft>
             <Video />
           </MainLeft>
           <MainRight>
-            <Notes notes={data['video-id-1']} />
+            <Notes notes={videoNotes} />
           </MainRight>
         </Main>
         <Footer />

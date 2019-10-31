@@ -20,7 +20,7 @@ Notes.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       time: PropTypes.number.isRequired,
-      id: PropTypes.string.isRequired
+      id: PropTypes.number.isRequired
     })
   ).isRequired
 };
