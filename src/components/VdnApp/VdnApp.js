@@ -10,9 +10,9 @@ import Notes from 'components/Notes';
 
 class VdnApp extends Component {
   state = {};
-
   render() {
     const { data, db } = this.props;
+    db.addVideo('мое важное видео', 'http://vot tako fot url.com');
     return (
       <>
         <NavBar videoItems={data.videoList} />

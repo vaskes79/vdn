@@ -1,71 +1,44 @@
 import { openDB } from 'idb';
 
-const setupDB = async () => {
+const setupDB = async ({ settingsStore, demoVideo }) => {
   let db = await openDB('VDN', 1, {
     upgrade(db) {
-      if (!db.objectStoreNames.contains('settings')) {
-        let settings = db.createObjectStore('settings', {
+      if (!db.objectStoreNames.contains('vdnSettings')) {
+        const { html, md, txt, time_offset } = settingsStore;
+        let settings = db.createObjectStore('vdnSettings', {
           keyPath: 'id',
           autoIncrement: true
         });
         settings.createIndex('by_name', 'name', { unique: true });
-
-        settings.add({
-          name: 'html',
-          value: true,
-          label: 'html',
-          description: 'using for activate deactivate button for copy html notes'
-        });
-        settings.add({
-          name: 'md',
-          value: true,
-          label: 'markdown',
-          description: 'using for activate deactivate button for copy markdown notes'
-        });
-        settings.add({
-          name: 'txt',
-          value: true,
-          label: 'text',
-          description: 'using for, activate deactivate button for copy text notes'
-        });
-        settings.add({
-          name: 'time_offset',
-          value: 3,
-          label: 'time offset',
-          description:
-            'using for set time offset seconds for saved current time video, accessible value 0, 3, 5, 10, default value 3 seconds'
-        });
+        settings.add(html);
+        settings.add(md);
+        settings.add(txt);
+        settings.add(time_offset);
       }
 
-      const url = 'https://youtu.be/cCOL7MC4Pl0';
-      const title = 'Видео инструкция';
-
-      if (!db.objectStoreNames.contains('videoList')) {
-        const videoList = db.createObjectStore('videoList', {
+      if (!db.objectStoreNames.contains('vdnList')) {
+        const { url, title } = demoVideo;
+        const videoList = db.createObjectStore('vdnList', {
           keyPath: 'id',
           autoIncrement: true
         });
-
         videoList.createIndex('by_title', 'title');
         videoList.createIndex('by_url', 'url', { unique: true });
-
         videoList.add({
           title,
           url
         });
       }
 
-      if (!db.objectStoreNames.contains('videoNotes')) {
-        const videoNotes = db.createObjectStore('videoNotes', {
-          keyPath: 'url',
+      if (!db.objectStoreNames.contains('vdnNotes')) {
+        const { notes } = demoVideo;
+        const videoNotes = db.createObjectStore('vdnNotes', {
+          keyPath: 'id',
           autoIncrement: true
         });
-
         videoNotes.createIndex('by_url', 'url', { unique: true });
-
-        videoNotes.add({
-          url,
-          notes: []
+        notes.forEach(note => {
+          videoNotes.add(note);
         });
       }
     }
@@ -74,14 +47,14 @@ const setupDB = async () => {
 };
 
 class IndexDBConnector {
-  constructor() {
-    this.db = setupDB();
+  constructor(settings) {
+    this.db = setupDB(settings);
   }
 
   setSettings = async (name, value) => {
     const db = await this.db;
-    const tx = db.transaction('settings', 'readwrite');
-    const store = tx.objectStore('settings');
+    const tx = db.transaction('vdnSettings', 'readwrite');
+    const store = tx.objectStore('vdnSettings');
     const index = store.index('by_name');
 
     try {
@@ -90,6 +63,24 @@ class IndexDBConnector {
       await store.put(newObj);
       await tx.complete;
       console.log(`setSettings ${name} was changed to ${value}`);
+    } catch (err) {
+      console.log('setSettings error', err.message);
+    }
+  };
+
+  addVideo = async (title, url) => {
+    const db = await this.db;
+    const tx = db.transaction('vdnList', 'readwrite');
+    const vdnListStore = tx.objectStore('vdnList');
+    const vdnItem = {
+      title,
+      url
+    };
+
+    try {
+      await vdnListStore.add(vdnItem);
+      await tx.complete;
+      console.log(`addVideo ${title} url ${url}`);
     } catch (err) {
       console.log('setSettings error', err.message);
     }
