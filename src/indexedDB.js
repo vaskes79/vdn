@@ -37,7 +37,7 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
           keyPath: 'id',
           autoIncrement: true
         });
-        videoNotes.createIndex('by_url', 'url', { unique: true });
+        videoNotes.createIndex('by_url', 'url');
         notes.forEach(note => {
           videoNotes.add(note);
         });
@@ -115,6 +115,26 @@ class IndexDBConnector {
       let videoList = await vdnListStore.getAll();
       await tx.complete;
       console.log(`getVideoList return ${videoList}`, videoList);
+    } catch (err) {
+      console.log('setSettings error', err.message);
+    }
+  };
+
+  getNoteList = async url => {
+    const db = await this.db;
+    const tx = db.transaction(VDN_NOTES, 'readonly');
+    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+
+    try {
+      let notes = null;
+      if (url) {
+        const index = vdnNotesStore.index('by_url');
+        notes = await index.getAll(url);
+      } else {
+        notes = await vdnNotesStore.getAll();
+      }
+      await tx.complete;
+      console.log(`getNotesList for url ${url}: `, notes);
     } catch (err) {
       console.log('setSettings error', err.message);
     }

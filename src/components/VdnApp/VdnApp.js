@@ -12,9 +12,6 @@ class VdnApp extends Component {
   state = {};
   render() {
     const { data, db } = this.props;
-    // db.addVideo('мое важное видео', 'http://vot tako fot url.com');
-    // db.addNote('http://vot tako fot url.com', 'some note', 234.34);
-    // db.getVideoList();
     return (
       <>
         <NavBar videoItems={data.videoList} />
