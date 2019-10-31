@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import { compose } from 'recompose';
 
 import styles from './styles';
 import SidebarList from './SidebarList';
+import { withDBContext } from 'db';
 
-const Sidebar = ({ children, classes, videoItems }) => {
-  const [state, setState] = React.useState({
-    open: false
-  });
+const Sidebar = ({ classes, db }) => {
+  const [open, openState] = useState(false);
+  const [videoItems, setVideo] = useState([]);
 
   const toggleSidebar = event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
-    setState({ open: !state.open });
+    openState(!open);
   };
+
+  const getVideo = async () => {
+    try {
+      const video = await db.getVideoList();
+      setVideo(video);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getVideo();
+  }, []);
 
   return (
     <>
@@ -37,7 +50,7 @@ const Sidebar = ({ children, classes, videoItems }) => {
           classes={{
             paper: classes.paper
           }}
-          open={state.open}
+          open={open}
           onClose={toggleSidebar}
         >
           <div className={classes.content}>
@@ -51,4 +64,7 @@ const Sidebar = ({ children, classes, videoItems }) => {
 
 Sidebar.propTypes = {};
 
-export default withStyles(styles)(Sidebar);
+export default compose(
+  withStyles(styles),
+  withDBContext
+)(Sidebar);

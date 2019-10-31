@@ -1,5 +1,5 @@
 import { openDB } from 'idb';
-import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from './constants';
+import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from '../constants';
 
 const setupDB = async ({ settingsStore, demoVideo }) => {
   let db = await openDB(NAME_DB, VER_DB, {

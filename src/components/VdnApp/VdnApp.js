@@ -7,6 +7,7 @@ import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
+import { withDBContext } from 'db';
 
 class VdnApp extends Component {
   state = {
@@ -25,7 +26,7 @@ class VdnApp extends Component {
 
     return (
       <>
-        <NavBar videoItems={videoList} />
+        <NavBar />
         <Main>
           <MainLeft>
             <Video />
@@ -40,4 +41,6 @@ class VdnApp extends Component {
   }
 }
 
-export default withStyles(styles)(VdnApp);
+const VdnAppWithDB = withDBContext(VdnApp);
+
+export default withStyles(styles)(VdnAppWithDB);
