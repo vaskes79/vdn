@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import styles from './styles';
@@ -7,29 +7,20 @@ import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
-import { withDBContext } from 'db';
 
-class VdnApp extends Component {
-  state = {};
+const VdnApp = () => (
+  <>
+    <NavBar />
+    <Main>
+      <MainLeft>
+        <Video />
+      </MainLeft>
+      <MainRight>
+        <Notes />
+      </MainRight>
+    </Main>
+    <Footer />
+  </>
+);
 
-  render() {
-    return (
-      <>
-        <NavBar />
-        <Main>
-          <MainLeft>
-            <Video />
-          </MainLeft>
-          <MainRight>
-            <Notes />
-          </MainRight>
-        </Main>
-        <Footer />
-      </>
-    );
-  }
-}
-
-const VdnAppWithDB = withDBContext(VdnApp);
-
-export default withStyles(styles)(VdnAppWithDB);
+export default withStyles(styles)(VdnApp);

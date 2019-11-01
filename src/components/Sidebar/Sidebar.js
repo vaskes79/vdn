@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
-import { compose } from 'recompose';
 
 import styles from './styles';
 import SidebarList from './SidebarList';
-import { withDBContext } from 'db';
+import { DBContext } from 'db';
 
-const Sidebar = ({ classes, db }) => {
+const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
   const [videoItems, setVideo] = useState([]);
+  const db = useContext(DBContext);
 
   const toggleSidebar = event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -31,6 +31,7 @@ const Sidebar = ({ classes, db }) => {
 
   useEffect(() => {
     getVideo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -64,7 +65,4 @@ const Sidebar = ({ classes, db }) => {
 
 Sidebar.propTypes = {};
 
-export default compose(
-  withStyles(styles),
-  withDBContext
-)(Sidebar);
+export default withStyles(styles)(Sidebar);

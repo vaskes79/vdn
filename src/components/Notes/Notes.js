@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+// eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { compose } from 'recompose';
 
 import styles from './styles';
 import NoteList from './NoteList';
 import AddNoteForm from './AddNoteForm';
 import Controls from './Controls';
-import { withDBContext } from 'db';
+import { DBContext } from 'db';
 
-const Notes = ({ classes, db }) => {
+const Notes = ({ classes }) => {
   const [notes, setNotes] = useState([]);
+  const db = useContext(DBContext);
 
   const getNotes = async () => {
     try {
@@ -23,6 +24,7 @@ const Notes = ({ classes, db }) => {
 
   useEffect(() => {
     getNotes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -38,7 +40,4 @@ Notes.propTypes = {};
 
 Notes.defaultProps = {};
 
-export default compose(
-  withStyles(styles),
-  withDBContext
-)(Notes);
+export default withStyles(styles)(Notes);
