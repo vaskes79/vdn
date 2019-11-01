@@ -1,7 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 
-import styles from './styles';
 import NavBar from 'components/NavBar';
 import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
@@ -23,4 +21,4 @@ const VdnApp = () => (
   </>
 );
 
-export default withStyles(styles)(VdnApp);
+export default VdnApp;
