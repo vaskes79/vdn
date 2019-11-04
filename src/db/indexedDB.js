@@ -20,7 +20,7 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
       if (!db.objectStoreNames.contains(VDN_LIST)) {
         const { url, title } = demoVideo;
         const videoList = db.createObjectStore(VDN_LIST, {
-          keyPath: 'id',
+          keyPath: 'url',
           autoIncrement: true
         });
         videoList.createIndex('by_title', 'title');
@@ -57,13 +57,11 @@ class IndexDBConnector {
     const tx = db.transaction(VDN_SETTINGS, 'readwrite');
     const store = tx.objectStore(VDN_SETTINGS);
     const index = store.index('by_name');
-
     try {
       const reqObj = await index.get(name);
       const newObj = { ...reqObj, value };
       await store.put(newObj);
-      await tx.complete;
-      console.log(`setSettings ${name} was changed to ${value}`);
+      await tx.done;
     } catch (err) {
       console.log('setSettings error', err.message);
     }
@@ -77,13 +75,30 @@ class IndexDBConnector {
       title,
       url
     };
-
     try {
       await vdnListStore.add(vdnItem);
-      await tx.complete;
-      console.log(`addVideo ${title} url ${url}`);
+      await tx.done;
     } catch (err) {
       console.log('addVideo error', err.message);
+    }
+  };
+
+  removeVideo = async urlID => {
+    const db = await this.db;
+    const tx = db.transaction([VDN_LIST, VDN_NOTES], 'readwrite');
+    const vdnListStore = tx.objectStore(VDN_LIST);
+    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    const indexNote = vdnNotesStore.index('by_url');
+    try {
+      await vdnListStore.delete(urlID);
+      let notesCursor = await indexNote.openCursor(IDBKeyRange.only(urlID));
+      while (notesCursor) {
+        await notesCursor.delete(notesCursor.primaryKey);
+        notesCursor = await notesCursor.continue();
+      }
+      await tx.done;
+    } catch (err) {
+      console.log('removeVideo error', err.message);
     }
   };
 
@@ -96,11 +111,9 @@ class IndexDBConnector {
       url,
       time
     };
-
     try {
       await vdnNotesStore.add(vdnNoteItem);
-      await tx.complete;
-      console.log(`addNote ${title} with url ${url}`);
+      await tx.done;
     } catch (err) {
       console.log('addNote error', err.message);
     }
@@ -110,11 +123,9 @@ class IndexDBConnector {
     const db = await this.db;
     const tx = db.transaction(VDN_LIST, 'readonly');
     const vdnListStore = tx.objectStore(VDN_LIST);
-
     try {
       let videoList = await vdnListStore.getAll();
-      await tx.complete;
-      console.log(`getVideoList return ${videoList}`, videoList);
+      await tx.done;
       return videoList;
     } catch (err) {
       console.log('getVideoList error', err.message);
@@ -125,7 +136,6 @@ class IndexDBConnector {
     const db = await this.db;
     const tx = db.transaction(VDN_NOTES, 'readonly');
     const vdnNotesStore = tx.objectStore(VDN_NOTES);
-
     try {
       let notes = null;
       if (url) {
@@ -134,8 +144,7 @@ class IndexDBConnector {
       } else {
         notes = await vdnNotesStore.getAll();
       }
-      await tx.complete;
-      console.log(`getNoteList for url ${url}: `, notes);
+      await tx.done;
       return notes;
     } catch (err) {
       console.log('getNoteList error', err.message);
