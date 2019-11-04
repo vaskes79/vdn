@@ -102,19 +102,6 @@ class IndexDBConnector {
     }
   };
 
-  removeNote = async id => {
-    const db = await this.db;
-    const tx = db.transaction(VDN_NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(VDN_NOTES);
-
-    try {
-      await vdnNotesStore.delete(id);
-      await tx.done;
-    } catch (err) {
-      console.log('removeVideo error', err.message);
-    }
-  };
-
   addNote = async (url, title, time) => {
     const db = await this.db;
     const tx = db.transaction(VDN_NOTES, 'readwrite');
@@ -129,6 +116,19 @@ class IndexDBConnector {
       await tx.done;
     } catch (err) {
       console.log('addNote error', err.message);
+    }
+  };
+
+  removeNote = async id => {
+    const db = await this.db;
+    const tx = db.transaction(VDN_NOTES, 'readwrite');
+    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+
+    try {
+      await vdnNotesStore.delete(id);
+      await tx.done;
+    } catch (err) {
+      console.log('removeVideo error', err.message);
     }
   };
 
