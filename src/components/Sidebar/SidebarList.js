@@ -9,7 +9,7 @@ import SidebarItem from './SidebarItem';
 const SidebarList = ({ classes, videoItems }) => (
   <List component="nav" className={classes.SidebarList} aria-label="navigation on added video">
     {videoItems.map(item => (
-      <SidebarItem key={item.id} data={item} />
+      <SidebarItem key={item.url} data={item} />
     ))}
   </List>
 );
