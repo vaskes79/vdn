@@ -11,3 +11,4 @@ All data stored into indexDB on client side
 
 - [material-ui](https://material-ui.com)
 - [material-design-icons (mdi)](https://dev.materialdesignicons.com/getting-started/react)
+- [idb](https://github.com/jakearchibald/idb)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -11,10 +11,12 @@ import {
   Typography
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { DBContext } from 'db';
 
 import styles from './styles';
 
 const Confirm = ({ classes, id, title, description }) => {
+  const db = useContext(DBContext);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -23,6 +25,7 @@ const Confirm = ({ classes, id, title, description }) => {
 
   const handleOk = () => {
     console.log('Confirm handleOk ');
+    db.removeNote(id);
     setOpen(false);
   };
 

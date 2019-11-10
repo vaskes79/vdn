@@ -9,11 +9,11 @@ import styles from './styles';
 import Sidebar from 'components/Sidebar';
 import { AddVideo } from 'components/Dialog';
 
-const NavBar = ({ classes, title, videoItems, onOpenAddVideo }) => (
+const NavBar = ({ classes, title, onOpenAddVideo }) => (
   <div className={classes.root}>
     <AppBar position="static">
       <Toolbar variant="dense">
-        <Sidebar videoItems={videoItems} />
+        <Sidebar />
         <Typography variant="h6" color="inherit" className={classes.title}>
           {title}
         </Typography>

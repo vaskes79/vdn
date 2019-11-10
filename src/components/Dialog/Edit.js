@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -13,21 +13,25 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 
 import styles from './styles';
+import { DBContext } from 'db';
 
-const Edit = ({ classes, id, title, description, label }) => {
-  const [open, setOpen] = React.useState(false);
+const Edit = ({ classes, id, url, title, label, note = false, video = false }) => {
+  const [open, setOpen] = useState(false);
+  const [titleForm, setTitleForm] = useState(title);
+  const db = useContext(DBContext);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleOk = () => {
-    console.log('Edit handleOk ');
+    if (video) db.editVideo(url, titleForm);
+    if (note) db.editNote(id, titleForm);
     setOpen(false);
   };
 
   const handleCancel = () => {
-    console.log('Edit handleCancel ');
+    setTitleForm(title);
     setOpen(false);
   };
 
@@ -36,7 +40,7 @@ const Edit = ({ classes, id, title, description, label }) => {
   };
 
   const handleChange = name => ({ target: { value } }) => {
-    console.log(value);
+    setTitleForm(value);
   };
 
   return (
@@ -53,14 +57,14 @@ const Edit = ({ classes, id, title, description, label }) => {
         fullWidth
         open={open}
       >
-        <DialogTitle id="confirmation-dialog-title">{title}</DialogTitle>
+        <DialogTitle id="confirmation-dialog-title">{url}</DialogTitle>
         <DialogContent>
           <TextField
             id="title"
             name="title"
             label={label}
             multiline
-            defaultValue={description}
+            defaultValue={titleForm}
             onChange={handleChange('title')}
             className={classes.textField}
             rowsMax={4}

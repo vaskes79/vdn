@@ -17,7 +17,13 @@ const NoteItem = ({ classes, note: { id, title, time } }) => {
     >
       <ListItemText className={classes.title} primary={fTime} secondary={title} />
       <ListItemSecondaryAction>
-        <Edit id={id} title={fTime} description={title} label={'Change Description Note'} />
+        <Edit
+          id={id}
+          title={title}
+          description={fTime}
+          note={true}
+          label={'Change Description Note'}
+        />
         <DeleteConfirm id={id} title={fTime} description={title} />
       </ListItemSecondaryAction>
     </ListItem>

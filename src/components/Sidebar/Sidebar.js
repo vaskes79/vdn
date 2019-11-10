@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -6,19 +6,34 @@ import IconButton from '@material-ui/core/IconButton';
 
 import styles from './styles';
 import SidebarList from './SidebarList';
+import { DBContext } from 'db';
 
-const Sidebar = ({ children, classes, videoItems }) => {
-  const [state, setState] = React.useState({
-    open: false
-  });
+const Sidebar = ({ classes }) => {
+  const [open, openState] = useState(false);
+  let video = [];
+  const [videoItems, setVideo] = useState(video);
+  const db = useContext(DBContext);
 
   const toggleSidebar = event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
-    setState({ open: !state.open });
+    openState(!open);
   };
+
+  const getVideo = async () => {
+    try {
+      video = await db.getVideoList();
+      setVideo(video);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getVideo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [video]);
 
   return (
     <>
@@ -37,7 +52,7 @@ const Sidebar = ({ children, classes, videoItems }) => {
           classes={{
             paper: classes.paper
           }}
-          open={state.open}
+          open={open}
           onClose={toggleSidebar}
         >
           <div className={classes.content}>

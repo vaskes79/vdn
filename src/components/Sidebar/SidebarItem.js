@@ -7,12 +7,12 @@ import { Confirm as DeleteConfirm, Edit } from 'components/Dialog';
 
 const onClickItem = () => console.log('on click item action');
 
-const SidebarItem = ({ classes, data: { src, id, title } }) => (
+const SidebarItem = ({ classes, data: { url, id, title } }) => (
   <ListItem button className={classes.SidebarItem} onClick={onClickItem}>
     <ListItemText primary={title} />
     <ListItemSecondaryAction>
-      <Edit id={id} title={src} description={title} label={'Change Title'} />
-      <DeleteConfirm id={id} title={title} description={src} />
+      <Edit id={url} url={url} title={title} video={true} label={'Change Title'} />
+      <DeleteConfirm id={url} title={title} description={url} />
     </ListItemSecondaryAction>
   </ListItem>
 );
