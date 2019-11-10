@@ -10,24 +10,23 @@ import Controls from './Controls';
 import { DBContext } from 'db';
 
 const Notes = ({ classes }) => {
-  const [notes, setNotes] = useState([]);
+  let updateNotes = [];
+  const [notes, setNotes] = useState(updateNotes);
   const db = useContext(DBContext);
 
   const getNotes = async () => {
     try {
-      const notes = await db.getNoteList();
-      setNotes(notes);
+      updateNotes = await db.getNoteList();
+      setNotes(updateNotes);
     } catch (e) {
       console.log(e);
     }
   };
 
-  // db.addNote('some url', 'some 2 text', 1123);
-
   useEffect(() => {
     getNotes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [updateNotes]);
 
   return (
     <div className={classes.root}>

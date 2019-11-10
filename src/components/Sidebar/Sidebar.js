@@ -10,7 +10,8 @@ import { DBContext } from 'db';
 
 const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
-  const [videoItems, setVideo] = useState([]);
+  let video = [];
+  const [videoItems, setVideo] = useState(video);
   const db = useContext(DBContext);
 
   const toggleSidebar = event => {
@@ -22,7 +23,7 @@ const Sidebar = ({ classes }) => {
 
   const getVideo = async () => {
     try {
-      const video = await db.getVideoList();
+      video = await db.getVideoList();
       setVideo(video);
     } catch (e) {
       console.log(e);
@@ -32,7 +33,7 @@ const Sidebar = ({ classes }) => {
   useEffect(() => {
     getVideo();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [video]);
 
   return (
     <>
