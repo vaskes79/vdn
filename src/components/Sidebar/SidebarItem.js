@@ -11,7 +11,7 @@ const SidebarItem = ({ classes, data: { url, id, title } }) => (
   <ListItem button className={classes.SidebarItem} onClick={onClickItem}>
     <ListItemText primary={title} />
     <ListItemSecondaryAction>
-      <Edit id={url} url={url} title={title} label={'Change Title'} />
+      <Edit id={url} url={url} title={title} video={true} label={'Change Title'} />
       <DeleteConfirm id={url} title={title} description={url} />
     </ListItemSecondaryAction>
   </ListItem>

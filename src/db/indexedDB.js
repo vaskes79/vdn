@@ -146,6 +146,20 @@ class IndexDBConnector {
     }
   };
 
+  editNote = async (urlID, title) => {
+    const db = await this.db;
+    const tx = db.transaction(VDN_NOTES, 'readwrite');
+    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    try {
+      let note = await vdnNotesStore.get(urlID);
+      note = { ...note, title };
+      await vdnNotesStore.put(note);
+      await tx.done;
+    } catch (err) {
+      console.log('editVideo error', err.message);
+    }
+  };
+
   getVideoList = async () => {
     const db = await this.db;
     const tx = db.transaction(VDN_LIST, 'readonly');

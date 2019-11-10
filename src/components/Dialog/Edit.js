@@ -15,7 +15,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import styles from './styles';
 import { DBContext } from 'db';
 
-const Edit = ({ classes, id, url, title, label }) => {
+const Edit = ({ classes, id, url, title, label, note = false, video = false }) => {
   const [open, setOpen] = useState(false);
   const [titleForm, setTitleForm] = useState(title);
   const db = useContext(DBContext);
@@ -25,7 +25,8 @@ const Edit = ({ classes, id, url, title, label }) => {
   };
 
   const handleOk = () => {
-    db.editVideo(url, titleForm);
+    if (video) db.editVideo(url, titleForm);
+    if (note) db.editNote(id, titleForm);
     setOpen(false);
   };
 

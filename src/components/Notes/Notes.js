@@ -22,6 +22,8 @@ const Notes = ({ classes }) => {
     }
   };
 
+  // db.addNote('some url', 'some 2 text', 1123);
+
   useEffect(() => {
     getNotes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
