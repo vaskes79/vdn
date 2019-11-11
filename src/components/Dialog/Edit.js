@@ -13,7 +13,7 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 
 import styles from './styles';
-import { DBContext } from 'db';
+import { DBContext } from 'components/db';
 
 const Edit = ({ classes, id, url, title, label, note = false, video = false }) => {
   const [open, setOpen] = useState(false);

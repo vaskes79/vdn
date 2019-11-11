@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import DB, { setupDB, DBContext } from 'db';
+import DB, { setupDB, DBContext } from 'components/db';
 
 import * as serviceWorker from './serviceWorker';
 import './index.css';

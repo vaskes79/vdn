@@ -7,7 +7,7 @@ import styles from './styles';
 import NoteList from './NoteList';
 import AddNoteForm from './AddNoteForm';
 import Controls from './Controls';
-import { DBContext } from 'db';
+import { DBContext } from 'components/db';
 
 const Notes = ({ classes }) => {
   let updateNotes = [];

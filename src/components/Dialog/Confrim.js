@@ -11,7 +11,7 @@ import {
   Typography
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { DBContext } from 'db';
+import { DBContext } from 'components/db';
 
 import styles from './styles';
 
