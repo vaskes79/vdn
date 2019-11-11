@@ -74,7 +74,7 @@ const Edit = ({ classes, id, url, title, label, note = false, video = false }) =
         </DialogContent>
         <DialogActions>
           <Typography variant="button" className={classes.confirmQuestion} color="secondary">
-            delete this item?
+            Edit this item?
           </Typography>
           <Button onClick={handleCancel} color="primary">
             Cancel
