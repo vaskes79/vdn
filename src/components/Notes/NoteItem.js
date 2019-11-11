@@ -6,7 +6,7 @@ import styles from './styles';
 import { formatTime } from 'components/utils';
 import { Confirm as DeleteConfirm, Edit } from 'components/Dialog';
 
-const NoteItem = ({ classes, note: { id, title, time } }) => {
+const NoteItem = ({ classes, note: { id, url, title, time } }) => {
   const fTime = formatTime(time);
   return (
     <ListItem
@@ -18,6 +18,7 @@ const NoteItem = ({ classes, note: { id, title, time } }) => {
       <ListItemText className={classes.title} primary={fTime} secondary={title} />
       <ListItemSecondaryAction>
         <Edit
+          url={url}
           id={id}
           title={title}
           description={fTime}
