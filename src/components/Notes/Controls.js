@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 
 import styles from './styles';
-import { formatToHtml, formatToYouTube, formatToMarkdown, copyToClipBoard } from 'components/utils';
+import { formatToHtml, formatToMarkdown, copyToClipBoard, formatToText } from 'components/utils';
 
 const Controls = ({ classes, notes }) => {
   const inputText = React.createRef();
@@ -14,9 +14,9 @@ const Controls = ({ classes, notes }) => {
         const HTML = formatToHtml(notes);
         inputText.current.value = HTML;
         break;
-      case 'youtube':
-        const YOUTUBE = formatToYouTube(notes);
-        inputText.current.value = YOUTUBE;
+      case 'text':
+        const TEXT = formatToText(notes);
+        inputText.current.value = TEXT;
         break;
       default:
         const MD = formatToMarkdown(notes);
@@ -42,9 +42,9 @@ const Controls = ({ classes, notes }) => {
         size="medium"
         color="primary"
         className={classes.btn}
-        onClick={copyNotesToBuffer('youtube')}
+        onClick={copyNotesToBuffer('text')}
       >
-        YouTube
+        TEXT
       </Button>
       <Button
         variant="contained"
