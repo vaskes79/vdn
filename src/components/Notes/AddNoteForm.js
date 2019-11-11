@@ -1,42 +1,50 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 import styles from './styles';
+import { VdnAppContext } from 'components/VdnApp';
+import { VideoContext } from 'components/Video';
+import { DBContext } from 'components/db';
+import { TIME_OFFSET } from 'components/constants';
 
-class AddNoteForm extends Component {
-  state = {
-    note: ''
+const AddNoteForm = ({ classes }) => {
+  let [note, setNote] = useState('');
+  let vdnPlay = useContext(VdnAppContext);
+  let videoPlayer = useContext(VideoContext);
+  let db = useContext(DBContext);
+
+  const onChange = ({ target: { value } }) => {
+    vdnPlay.setPlaying(false);
+    setNote(value);
   };
 
-  onChange = ({ target: { value } }) => {
-    this.setState({ note: value });
-  };
-
-  onSubmit = e => {
+  const onSubmit = e => {
     e.preventDefault();
-    console.log(this.state.note);
+    vdnPlay.setPlaying(true);
+    const noteItem = {
+      title: note,
+      time: videoPlayer.getCurrentTime() - TIME_OFFSET,
+      url: vdnPlay.urlVideo
+    };
+    db.addNote(noteItem);
+    setNote('');
   };
 
-  render() {
-    const { classes } = this.props;
-    const { note } = this.state;
-
-    return (
-      <form className={classes.addNoteForm} onSubmit={this.onSubmit}>
-        <TextField
-          className={classes.input}
-          name="note"
-          label="Note"
-          placeholder="add new note"
-          onChange={this.onChange}
-          fullWidth
-          value={note}
-          margin="normal"
-        />
-      </form>
-    );
-  }
-}
+  return (
+    <form className={classes.addNoteForm} onSubmit={onSubmit}>
+      <TextField
+        className={classes.input}
+        name="note"
+        label="Note"
+        placeholder="add new note"
+        onChange={onChange}
+        fullWidth
+        value={note}
+        margin="normal"
+      />
+    </form>
+  );
+};
 
 export default withStyles(styles)(AddNoteForm);

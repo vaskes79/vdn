@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, createContext } from 'react';
 
 import NavBar from 'components/NavBar';
 import { Main, MainLeft, MainRight } from 'components/Main';
@@ -6,19 +6,36 @@ import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
 
-const VdnApp = () => (
-  <>
-    <NavBar />
-    <Main>
-      <MainLeft>
-        <Video />
-      </MainLeft>
-      <MainRight>
-        <Notes />
-      </MainRight>
-    </Main>
-    <Footer />
-  </>
-);
+let VdnAppContext;
+
+const VdnApp = () => {
+  let [playing, setPlaying] = useState(false);
+  let [urlVideo, setUrlVideo] = useState('https://youtu.be/cCOL7MC4Pl0');
+
+  VdnAppContext = createContext({
+    playing,
+    setPlaying,
+    urlVideo,
+    setUrlVideo
+  });
+
+  VdnAppContext.displayName = 'VdnAppContext';
+
+  return (
+    <>
+      <NavBar />
+      <Main>
+        <MainLeft>
+          <Video playing={playing} setPlaying={setPlaying} src={urlVideo} />
+        </MainLeft>
+        <MainRight>
+          <Notes />
+        </MainRight>
+      </Main>
+      <Footer />
+    </>
+  );
+};
 
 export default VdnApp;
+export { VdnAppContext };

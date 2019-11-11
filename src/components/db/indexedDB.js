@@ -1,5 +1,5 @@
 import { openDB } from 'idb';
-import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from '../constants';
+import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from 'components/constants';
 
 const setupDB = async ({ settingsStore, demoVideo }) => {
   let db = await openDB(NAME_DB, VER_DB, {
@@ -116,7 +116,7 @@ class IndexDBConnector {
     }
   };
 
-  addNote = async (url, title, time) => {
+  addNote = async ({ url, title, time }) => {
     const db = await this.db;
     const tx = db.transaction(VDN_NOTES, 'readwrite');
     const vdnNotesStore = tx.objectStore(VDN_NOTES);

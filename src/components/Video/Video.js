@@ -1,21 +1,32 @@
-import React from 'react';
+import React, { createContext, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ReactPlayer from 'react-player';
 
 import styles from './styles';
+let VideoContext;
+const Video = ({ classes, src, playing, setPlaying }) => {
+  const player = createRef();
 
-const Video = ({ classes, src, playing }) => (
-  <div className={classes.root}>
-    <ReactPlayer
-      url={src}
-      width="100%"
-      height={`${window.innerHeight - 150}px`}
-      controls
-      playing={playing}
-    />
-  </div>
-);
+  VideoContext = createContext({
+    getCurrentTime: () => player.current.getCurrentTime()
+  });
+
+  return (
+    <div className={classes.root}>
+      <ReactPlayer
+        url={src}
+        width="100%"
+        height={`${window.innerHeight - 150}px`}
+        controls
+        playing={playing}
+        onPlay={() => setPlaying(true)}
+        onStart={() => setPlaying(true)}
+        ref={player}
+      />
+    </div>
+  );
+};
 
 Video.propTypes = {
   src: PropTypes.string.isRequired,
@@ -23,8 +34,8 @@ Video.propTypes = {
 };
 
 Video.defaultProps = {
-  src: 'https://youtu.be/cCOL7MC4Pl0',
   playing: false
 };
 
+export { VideoContext };
 export default withStyles(styles)(Video);

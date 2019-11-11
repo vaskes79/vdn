@@ -2,8 +2,8 @@ export const formatToHtml = notes => {
   return 'formatToHTML';
 };
 
-export const formatToYouTube = notes => {
-  return 'formatToYouTube';
+export const formatToText = notes => {
+  return 'formatToText';
 };
 
 export const formatToMarkdown = notes => {

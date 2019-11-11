@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 
 import styles from './styles';
 import SidebarList from './SidebarList';
-import { DBContext } from 'db';
+import { DBContext } from 'components/db';
 
 const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
