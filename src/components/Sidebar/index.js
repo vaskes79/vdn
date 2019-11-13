@@ -1,2 +1,4 @@
-import Sidebar from './Sidebar';
+import Sidebar, { SidebarContext } from './Sidebar';
+
+export { SidebarContext };
 export default Sidebar;
