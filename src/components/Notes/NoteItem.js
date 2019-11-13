@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 
 import styles from './styles';
 import { formatTime } from 'components/utils';
 import { Confirm as DeleteConfirm, Edit } from 'components/Dialog';
+import { VideoContext } from 'components/Video';
 
 const NoteItem = ({ classes, note: { id, url, title, time } }) => {
   const fTime = formatTime(time);
+  const app = useContext(VideoContext);
+
+  const onClickItem = () => {
+    app.goToTime(time);
+  };
+
   return (
     <ListItem
       button
       // selected={selectedIndex === 2}
       dense
-      onClick={event => console.log(event.target)}
+      onClick={onClickItem}
     >
       <ListItemText className={classes.title} primary={fTime} secondary={title} />
       <ListItemSecondaryAction>

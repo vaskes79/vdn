@@ -9,7 +9,8 @@ const Video = ({ classes, src, playing, setPlaying }) => {
   const player = createRef();
 
   VideoContext = createContext({
-    getCurrentTime: () => player.current.getCurrentTime()
+    getCurrentTime: () => player.current.getCurrentTime(),
+    goToTime: time => player.current.seekTo(time)
   });
 
   return (
