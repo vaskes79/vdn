@@ -1,22 +1,22 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from "react";
 // eslint-disable-next-line no-unused-vars
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
-import styles from './styles';
-import NoteList from './NoteList';
-import AddNoteForm from './AddNoteForm';
-import Controls from './Controls';
-import { DBContext } from 'components/db';
+import styles from "./styles";
+import NoteList from "./NoteList";
+import AddNoteForm from "./AddNoteForm";
+import Controls from "./Controls";
+import { DBContext } from "components/db";
 
-const Notes = ({ classes }) => {
+const Notes = ({ classes, urlNotes = "" }) => {
   let updateNotes = [];
   const [notes, setNotes] = useState(updateNotes);
   const db = useContext(DBContext);
 
   const getNotes = async () => {
     try {
-      updateNotes = await db.getNoteList();
+      updateNotes = await db.getNoteList(urlNotes);
       setNotes(updateNotes);
     } catch (e) {
       console.log(e);

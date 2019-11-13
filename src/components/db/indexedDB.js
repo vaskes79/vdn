@@ -5,7 +5,7 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
   let db = await openDB(NAME_DB, VER_DB, {
     upgrade(db) {
       if (!db.objectStoreNames.contains(VDN_SETTINGS)) {
-        const { html, md, txt, time_offset } = settingsStore;
+        const { html, md, txt, time_offset, current_video } = settingsStore;
         let settings = db.createObjectStore(VDN_SETTINGS, {
           keyPath: 'id',
           autoIncrement: true
@@ -15,6 +15,7 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
         settings.add(md);
         settings.add(txt);
         settings.add(time_offset);
+        settings.add(current_video);
       }
 
       if (!db.objectStoreNames.contains(VDN_LIST)) {
@@ -67,7 +68,7 @@ class IndexDBConnector {
     }
   };
 
-  addVideo = async (title, url) => {
+  addVideo = async ({ title, url }) => {
     const db = await this.db;
     const tx = db.transaction(VDN_LIST, 'readwrite');
     const vdnListStore = tx.objectStore(VDN_LIST);
@@ -189,6 +190,35 @@ class IndexDBConnector {
       return notes;
     } catch (err) {
       console.log('getNoteList error', err.message);
+    }
+  };
+
+  getCurrentVideo = async () => {
+    const db = await this.db;
+    const tx = db.transaction(VDN_SETTINGS, 'readonly');
+    const vdnSettings = tx.objectStore(VDN_SETTINGS);
+    try {
+      const index = vdnSettings.index('by_name');
+      let currentVideo = await index.getAll('current_video');
+      await tx.done;
+      return currentVideo;
+    } catch (err) {
+      console.log('getCurrentVideo error', err.message);
+    }
+  };
+
+  setCurrentVideo = async value => {
+    const db = await this.db;
+    const tx = db.transaction(VDN_SETTINGS, 'readwrite');
+    const vdnSettings = tx.objectStore(VDN_SETTINGS);
+    try {
+      const index = vdnSettings.index('by_name');
+      let currentVideo = await index.get('current_video');
+      await index.objectStore.put({ ...currentVideo, value });
+      await tx.done;
+      return currentVideo;
+    } catch (err) {
+      console.log('getCurrentVideo error', err.message);
     }
   };
 }

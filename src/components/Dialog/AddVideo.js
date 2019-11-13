@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Fab,
@@ -13,6 +13,8 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 
 import styles from './styles';
+import { DBContext } from 'components/db';
+import { VdnAppContext } from 'components/VdnApp';
 
 const INIT_STATE = {
   open: false,
@@ -21,7 +23,9 @@ const INIT_STATE = {
 };
 
 const AddVideo = ({ classes }) => {
-  const [values, setValues] = React.useState({ ...INIT_STATE });
+  const [values, setValues] = useState({ ...INIT_STATE });
+  const db = useContext(DBContext);
+  const app = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
     setValues({ ...values, open: true });
@@ -31,7 +35,11 @@ const AddVideo = ({ classes }) => {
     const { title, url } = values;
     const newVideo = { title, url };
     /* TODO create method for update storage */
-    if (action === 'submit') console.log(newVideo);
+    if (action === 'submit') {
+      app.setUrlVideo(url);
+      db.setCurrentVideo(url);
+      db.addVideo(newVideo);
+    }
     if (action === 'cancel') console.log('cancel');
     if (action === 'close') console.log('close');
     /* end */

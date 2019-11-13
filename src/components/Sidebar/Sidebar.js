@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -8,11 +8,16 @@ import styles from './styles';
 import SidebarList from './SidebarList';
 import { DBContext } from 'components/db';
 
+let SidebarContext;
+
 const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
   let video = [];
   const [videoItems, setVideo] = useState(video);
   const db = useContext(DBContext);
+  SidebarContext = createContext({
+    openState: val => openState(val)
+  });
 
   const toggleSidebar = event => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -66,4 +71,5 @@ const Sidebar = ({ classes }) => {
 
 Sidebar.propTypes = {};
 
+export { SidebarContext };
 export default withStyles(styles)(Sidebar);
