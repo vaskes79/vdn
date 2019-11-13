@@ -209,12 +209,12 @@ class IndexDBConnector {
 
   setCurrentVideo = async value => {
     const db = await this.db;
-    const tx = db.transaction(VDN_SETTINGS, 'readonly');
+    const tx = db.transaction(VDN_SETTINGS, 'readwrite');
     const vdnSettings = tx.objectStore(VDN_SETTINGS);
     try {
       const index = vdnSettings.index('by_name');
       let currentVideo = await index.get('current_video');
-      await index.put({ ...currentVideo, value });
+      await index.objectStore.put({ ...currentVideo, value });
       await tx.done;
       return currentVideo;
     } catch (err) {
