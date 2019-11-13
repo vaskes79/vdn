@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { useState, useContext } from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import {
   Fab,
   Button,
@@ -9,17 +9,17 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
 
-import styles from "./styles";
-import { DBContext } from "components/db";
-import { VdnAppContext } from "components/VdnApp";
+import styles from './styles';
+import { DBContext } from 'components/db';
+import { VdnAppContext } from 'components/VdnApp';
 
 const INIT_STATE = {
   open: false,
-  title: "",
-  url: ""
+  title: '',
+  url: ''
 };
 
 const AddVideo = ({ classes }) => {
@@ -35,12 +35,13 @@ const AddVideo = ({ classes }) => {
     const { title, url } = values;
     const newVideo = { title, url };
     /* TODO create method for update storage */
-    if (action === "submit") {
+    if (action === 'submit') {
       app.setUrlVideo(url);
+      db.setCurrentVideo(url);
       db.addVideo(newVideo);
     }
-    if (action === "cancel") console.log("cancel");
-    if (action === "close") console.log("close");
+    if (action === 'cancel') console.log('cancel');
+    if (action === 'close') console.log('close');
     /* end */
 
     setValues({ ...INIT_STATE });
@@ -64,7 +65,7 @@ const AddVideo = ({ classes }) => {
       <Dialog
         maxWidth="sm"
         open={values.open}
-        onClose={handleClose("close")}
+        onClose={handleClose('close')}
         aria-labelledby="form-dialog-title"
         fullWidth
       >
@@ -81,7 +82,7 @@ const AddVideo = ({ classes }) => {
             label="Title Video"
             type="text"
             fullWidth
-            onChange={handleChange("title")}
+            onChange={handleChange('title')}
           />
           <TextField
             margin="normal"
@@ -90,14 +91,14 @@ const AddVideo = ({ classes }) => {
             label="Url Video"
             type="url"
             fullWidth
-            onChange={handleChange("url")}
+            onChange={handleChange('url')}
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose("cancel")} color="primary">
+          <Button onClick={handleClose('cancel')} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose("submit")} color="primary">
+          <Button onClick={handleClose('submit')} color="primary">
             Add Video
           </Button>
         </DialogActions>
