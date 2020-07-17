@@ -9,13 +9,15 @@ import './index.css';
 import VdnApp from 'components/VdnApp';
 
 const theme = createMuiTheme();
+const value = new DB(setupDB);
 
 // console.log(theme);
+console.log(value);
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <DBContext.Provider value={new DB(setupDB)}>
-      <CssBaseline />
+    <CssBaseline />
+    <DBContext.Provider value={{ ...value }}>
       <VdnApp />
     </DBContext.Provider>
   </ThemeProvider>,

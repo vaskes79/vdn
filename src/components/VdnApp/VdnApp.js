@@ -10,21 +10,20 @@ import { DBContext } from 'components/db';
 let VdnAppContext;
 
 const VdnApp = () => {
-  const db = useContext(DBContext);
-  let currentUrlVideo = '';
+  const { getCurrentVideo } = useContext(DBContext);
   let [playing, setPlaying] = useState(false);
-  let [urlVideo, setUrlVideo] = useState(currentUrlVideo);
+  let [urlVideo, setUrlVideo] = useState('');
 
   useEffect(() => {
-    (async () => {
-      try {
-        currentUrlVideo = await db.getCurrentVideo();
-        setUrlVideo(currentUrlVideo[0].value);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, [currentUrlVideo]);
+    const updateUrl = async () => {
+      let currentUrlVideo = await getCurrentVideo();
+      setUrlVideo(currentUrlVideo[0].value);
+    };
+
+    updateUrl();
+
+    return () => console.log('VdnApp useEffect unmonut');
+  }, [getCurrentVideo, setUrlVideo]);
 
   VdnAppContext = createContext({
     playing,
