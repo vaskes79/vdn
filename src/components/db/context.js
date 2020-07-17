@@ -1,5 +1,9 @@
 import React from 'react';
-const DBContext = React.createContext(null);
+import DB from './indexedDB';
+import setupDB from './setupDB';
+
+const value = new DB(setupDB);
+const DBContext = React.createContext({ ...value });
 DBContext.displayName = 'DBContext';
 
 export const withDBContext = Component => props => (

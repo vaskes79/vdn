@@ -2,24 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import DB, { setupDB, DBContext } from 'components/db';
 
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import VdnApp from 'components/VdnApp';
 
 const theme = createMuiTheme();
-const value = new DB(setupDB);
 
 // console.log(theme);
-console.log(value);
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <DBContext.Provider value={{ ...value }}>
-      <VdnApp />
-    </DBContext.Provider>
+    <VdnApp />
   </ThemeProvider>,
   document.getElementById('root')
 );
