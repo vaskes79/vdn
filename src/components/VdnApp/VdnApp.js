@@ -7,7 +7,8 @@ import Footer from 'components/Footer';
 import Notes from 'components/Notes';
 import { DBContext } from 'components/db';
 
-let VdnAppContext;
+const VdnAppContext = createContext({});
+VdnAppContext.displayName = 'VdnAppContext';
 
 const VdnApp = () => {
   const { getCurrentVideo } = useContext(DBContext);
@@ -25,25 +26,25 @@ const VdnApp = () => {
     return () => console.log('VdnApp useEffect unmonut');
   }, [getCurrentVideo, setUrlVideo]);
 
-  VdnAppContext = createContext({
+  const player = {
     playing,
     setPlaying,
     urlVideo,
     setUrlVideo: url => setUrlVideo(url)
-  });
-
-  VdnAppContext.displayName = 'VdnAppContext';
+  };
 
   return (
     <>
       <NavBar />
       <Main>
-        <MainLeft>
-          <Video playing={playing} setPlaying={setPlaying} src={urlVideo} />
-        </MainLeft>
-        <MainRight>
-          <Notes urlNotes={urlVideo} />
-        </MainRight>
+        <VdnAppContext.Provider value={player}>
+          <MainLeft>
+            <Video playing={playing} setPlaying={setPlaying} src={urlVideo} />
+          </MainLeft>
+          <MainRight>
+            <Notes urlNotes={urlVideo} />
+          </MainRight>
+        </VdnAppContext.Provider>
       </Main>
       <Footer />
     </>
