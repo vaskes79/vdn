@@ -15,7 +15,8 @@ const Sidebar = ({ classes }) => {
   const [videoItems, setVideo] = useState([]);
   const {
     db: { getVideoList },
-    updateVer
+    updateVer,
+    setPlaying
   } = useContext(VdnAppContext);
 
   SidebarContext = createContext({
@@ -23,10 +24,11 @@ const Sidebar = ({ classes }) => {
   });
 
   const toggleSidebar = event => {
+    openState(!open);
+    open ? setPlaying(true) : setPlaying(false);
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    openState(!open);
   };
 
   useEffect(() => {
