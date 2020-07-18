@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
-import { VdnAppContext } from 'components/VdnApp';
 
 import styles from './styles';
 import NoteItem from './NoteItem';
