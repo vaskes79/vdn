@@ -1,18 +1,19 @@
-export const formatToHtml = notes => {
-  return 'formatToHTML';
-};
+const getVideoUrl = (url, time) => {
+  let URL = '';
+  let curtime = '' + Math.round(time);
+  if (/youtu/.test(url)) {
+    const [src, id] = url.split('be/', 2);
+    URL = `https://www.youtube.com/watch?t=${curtime.slice(0, 4)}&v=${id}`;
+    console.log(src);
+  }
 
-export const formatToText = notes => {
-  return 'formatToText';
-};
+  if (/vimeo/.test(url)) {
+    const [src, id] = url.split('com/', 2);
+    URL = `https://vimeo.com/${id}#t=${curtime.slice(0, 4)}`;
+    console.log(src);
+  }
 
-export const formatToMarkdown = notes => {
-  return 'formatToMarkdown';
-};
-
-export const copyToClipBoard = el => {
-  el.select();
-  document.execCommand('copy');
+  return URL;
 };
 
 export const visuallyHidden = {
@@ -37,4 +38,58 @@ export const formatTime = duration => {
   s = s < 10 ? '0' + s : s;
 
   return h + ':' + m + ':' + s;
+};
+
+export const formatToHtml = notes => {
+  console.log(notes);
+  let links = [];
+  links.push('<ul>');
+  notes.forEach(({ time, title, url }) => {
+    let timecode = formatTime(time * 1000);
+
+    let urlStr = getVideoUrl(url, time);
+
+    let viewLinksFormat = `\t<li><a href="${urlStr}">${timecode} ${title}</a></li>`;
+    links.push(viewLinksFormat);
+  });
+  links.push('</ul>');
+
+  return links.join('\n');
+};
+
+export const formatToText = notes => {
+  let viewLinks = [];
+  let links = [];
+  notes.forEach(({ time, title, url }) => {
+    let timecode = formatTime(time * 1000);
+
+    let urlStr = getVideoUrl(url, time);
+
+    let viewLinksFormat = `[\`${timecode}\`] ${title} ${urlStr}`;
+    viewLinks.push(viewLinksFormat);
+  });
+
+  return viewLinks.concat(links).join('\n');
+};
+
+export const formatToMarkdown = notes => {
+  let viewLinks = [];
+  let links = [];
+  notes.forEach(({ time, title, url }) => {
+    let timecode = formatTime(time * 1000);
+
+    let urlStr = getVideoUrl(url, time);
+
+    let viewLinksFormat = `- [\`${timecode}\`] ${title}`;
+    let linksFormat = `[\`${timecode}\`]: ${urlStr}`;
+    viewLinks.push(viewLinksFormat);
+    links.push(linksFormat);
+  });
+
+  return viewLinks.concat(links).join('\n');
+};
+
+export const copyToClipBoard = el => {
+  el.select();
+  document.execCommand('copy');
 };

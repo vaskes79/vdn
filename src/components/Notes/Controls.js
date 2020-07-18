@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import { VdnAppContext } from 'components/VdnApp';
 
 import styles from './styles';
 import { formatToHtml, formatToMarkdown, copyToClipBoard, formatToText } from 'components/utils';
 
-const Controls = ({ classes, notes }) => {
+const Controls = ({ classes }) => {
   const inputText = React.createRef();
+  const { notes } = useContext(VdnAppContext);
 
   const copyNotesToBuffer = format => e => {
     switch (format) {
