@@ -65,7 +65,7 @@ export const formatToText = notes => {
 
     let urlStr = getVideoUrl(url, time);
 
-    let viewLinksFormat = `[\`${timecode}\`] ${title} ${urlStr}`;
+    let viewLinksFormat = `${timecode} ${title} ${urlStr}`;
     viewLinks.push(viewLinksFormat);
   });
 
