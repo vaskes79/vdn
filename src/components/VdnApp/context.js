@@ -1,6 +1,8 @@
 import { createContext } from 'react';
 
-const VdnAppContext = createContext();
+const VdnAppContext = createContext({
+  setUrlVideo: () => console.log('setUrlVideo from VdnAppContext')
+});
 
 VdnAppContext.displayName = 'VdnAppContext';
 

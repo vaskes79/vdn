@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext, useCallback } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -12,9 +12,8 @@ let SidebarContext;
 
 const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
-  let video = [];
-  const [videoItems, setVideo] = useState(video);
-  const db = useContext(DBContext);
+  const [videoItems, setVideo] = useState([]);
+  const { getVideoList } = useContext(DBContext);
   SidebarContext = createContext({
     openState: val => openState(val)
   });
@@ -26,19 +25,18 @@ const Sidebar = ({ classes }) => {
     openState(!open);
   };
 
-  const getVideo = async () => {
+  const getVideoListMemo = useCallback(async () => {
     try {
-      video = await db.getVideoList();
+      const video = await getVideoList();
       setVideo(video);
     } catch (e) {
       console.log(e);
     }
-  };
+  }, [getVideoList]);
 
   useEffect(() => {
-    getVideo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [video]);
+    getVideoListMemo();
+  }, [getVideoListMemo]);
 
   return (
     <>

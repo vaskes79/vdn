@@ -15,8 +15,12 @@ const Notes = ({ classes }) => {
   const { urlVideo } = useContext(VdnAppContext);
   const { getNoteList } = useContext(DBContext);
   const getNoteListMemo = useCallback(async () => {
-    let updateNotes = await getNoteList(urlVideo);
-    setNotes(updateNotes);
+    try {
+      let updateNotes = await getNoteList(urlVideo);
+      setNotes(updateNotes);
+    } catch (e) {
+      console.log(e);
+    }
   }, [urlVideo, setNotes, getNoteList]);
 
   useEffect(() => {
