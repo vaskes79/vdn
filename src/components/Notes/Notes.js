@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 // eslint-disable-next-line no-unused-vars
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -8,18 +8,20 @@ import NoteList from './NoteList';
 import AddNoteForm from './AddNoteForm';
 import Controls from './Controls';
 import { DBContext } from 'components/db';
+import { VdnAppContext } from '../VdnApp';
 
-const Notes = ({ classes, urlNotes = '' }) => {
+const Notes = ({ classes }) => {
   const [notes, setNotes] = useState([]);
+  const { urlVideo } = useContext(VdnAppContext);
   const { getNoteList } = useContext(DBContext);
+  const getNoteListMemo = useCallback(async () => {
+    let updateNotes = await getNoteList(urlVideo);
+    setNotes(updateNotes);
+  }, [urlVideo, setNotes, getNoteList]);
 
   useEffect(() => {
-    const getNotes = async () => {
-      let updateNotes = await getNoteList(urlNotes);
-      setNotes(updateNotes);
-    };
-    getNotes();
-  }, [getNoteList, notes, setNotes, urlNotes]);
+    getNoteListMemo();
+  }, [getNoteListMemo]);
 
   return (
     <div className={classes.root}>

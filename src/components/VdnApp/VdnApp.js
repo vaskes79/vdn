@@ -39,7 +39,7 @@ const VdnApp = () => {
             <Video />
           </MainLeft>
           <MainRight>
-            <Notes urlNotes={urlVideo} />
+            <Notes />
           </MainRight>
         </VdnAppContext.Provider>
       </Main>
