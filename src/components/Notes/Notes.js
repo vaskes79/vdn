@@ -7,13 +7,14 @@ import styles from './styles';
 import NoteList from './NoteList';
 import AddNoteForm from './AddNoteForm';
 import Controls from './Controls';
-import { DBContext } from 'components/db';
-import { VdnAppContext } from '../VdnApp';
+import { VdnAppContext } from 'components/VdnApp';
 
 const Notes = ({ classes }) => {
   const [notes, setNotes] = useState([]);
-  const { urlVideo } = useContext(VdnAppContext);
-  const { getNoteList } = useContext(DBContext);
+  const {
+    urlVideo,
+    db: { getNoteList }
+  } = useContext(VdnAppContext);
   const getNoteListMemo = useCallback(async () => {
     try {
       let updateNotes = await getNoteList(urlVideo);

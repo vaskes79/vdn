@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Fab,
@@ -13,7 +13,6 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 
 import styles from './styles';
-import { DBContext } from 'components/db';
 import { VdnAppContext } from 'components/VdnApp';
 
 const INIT_STATE = {
@@ -24,8 +23,10 @@ const INIT_STATE = {
 
 const AddVideo = ({ classes }) => {
   const [values, setValues] = useState({ ...INIT_STATE });
-  const { setCurrentVideo, addVideo } = useContext(DBContext);
-  const { setUrlVideo } = useContext(VdnAppContext);
+  const {
+    setUrlVideo,
+    db: { setCurrentVideo, addVideo }
+  } = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
     setValues({ ...values, open: true });

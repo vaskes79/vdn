@@ -13,20 +13,22 @@ import {
 import EditIcon from '@material-ui/icons/Edit';
 
 import styles from './styles';
-import { DBContext } from 'components/db';
+import { VdnAppContext } from 'components/VdnApp';
 
 const Edit = ({ classes, id, url, title, label, note = false, video = false }) => {
   const [open, setOpen] = useState(false);
   const [titleForm, setTitleForm] = useState(title);
-  const db = useContext(DBContext);
+  const {
+    db: { editVideo, editNote }
+  } = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleOk = () => {
-    if (video) db.editVideo(url, titleForm);
-    if (note) db.editNote(id, titleForm);
+    if (video) editVideo(url, titleForm);
+    if (note) editNote(id, titleForm);
     setOpen(false);
   };
 

@@ -6,14 +6,16 @@ import IconButton from '@material-ui/core/IconButton';
 
 import styles from './styles';
 import SidebarList from './SidebarList';
-import { DBContext } from 'components/db';
+import { VdnAppContext } from 'components/VdnApp';
 
 let SidebarContext;
 
 const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
   const [videoItems, setVideo] = useState([]);
-  const { getVideoList } = useContext(DBContext);
+  const {
+    db: { getVideoList }
+  } = useContext(VdnAppContext);
   SidebarContext = createContext({
     openState: val => openState(val)
   });

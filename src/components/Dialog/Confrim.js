@@ -11,12 +11,14 @@ import {
   Typography
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { DBContext } from 'components/db';
+import { VdnAppContext } from 'components/VdnApp';
 
 import styles from './styles';
 
 const Confirm = ({ classes, id, title, description }) => {
-  const db = useContext(DBContext);
+  const {
+    db: { removeNote }
+  } = useContext(VdnAppContext);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -25,7 +27,7 @@ const Confirm = ({ classes, id, title, description }) => {
 
   const handleOk = () => {
     console.log('Confirm handleOk ');
-    db.removeNote(id);
+    removeNote(id);
     setOpen(false);
   };
 
