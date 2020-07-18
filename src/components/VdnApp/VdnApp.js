@@ -12,17 +12,18 @@ const VdnApp = () => {
   const { getCurrentVideo, getNoteList } = db;
   const [playing, setPlaying] = useState(false);
   const [urlVideo, setUrlVideo] = useState('');
+  const [updateVer, setUpdateVer] = useState(0);
   const [notes, setNotes] = useState([]);
   const player = createRef();
 
   useEffect(() => {
-    const getNoteListMemo = async () => {
+    const getNoteRequest = async () => {
       const newNotes = await getNoteList(urlVideo);
-      setNotes(newNotes);
+      setNotes([...newNotes]);
     };
 
-    getNoteListMemo();
-  }, [getNoteList, urlVideo]);
+    getNoteRequest();
+  }, [getNoteList, urlVideo, updateVer]);
 
   useEffect(() => {
     const updateUrl = async () => {
@@ -31,17 +32,17 @@ const VdnApp = () => {
     };
 
     updateUrl();
-
-    return () => console.log('VdnApp useEffect unmonut');
-  }, [getCurrentVideo]);
+  }, [getCurrentVideo, updateVer]);
 
   const vdnContext = {
+    updateVer,
     playing,
     notes,
     getCurrentTime: () => player.current.getCurrentTime(),
     goToTime: time => player.current.seekTo(time),
     setPlaying,
     urlVideo,
+    update: () => setUpdateVer(curentVer => curentVer + 1),
     setUrlVideo: url => setUrlVideo(url),
     db
   };

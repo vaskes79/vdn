@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext, useCallback } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -14,7 +14,8 @@ const Sidebar = ({ classes }) => {
   const [open, openState] = useState(false);
   const [videoItems, setVideo] = useState([]);
   const {
-    db: { getVideoList }
+    db: { getVideoList },
+    updateVer
   } = useContext(VdnAppContext);
 
   SidebarContext = createContext({
@@ -28,18 +29,15 @@ const Sidebar = ({ classes }) => {
     openState(!open);
   };
 
-  const getVideoListMemo = useCallback(async () => {
-    try {
+  useEffect(() => {
+    const getVideoListRequest = async () => {
       const video = await getVideoList();
       setVideo(video);
-    } catch (e) {
-      console.log(e);
-    }
-  }, [getVideoList]);
 
-  useEffect(() => {
-    getVideoListMemo();
-  }, [getVideoListMemo]);
+      console.log(updateVer);
+    };
+    getVideoListRequest();
+  }, [getVideoList, updateVer]);
 
   return (
     <>

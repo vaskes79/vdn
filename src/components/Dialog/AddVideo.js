@@ -25,6 +25,7 @@ const AddVideo = ({ classes }) => {
   const [values, setValues] = useState({ ...INIT_STATE });
   const {
     setUrlVideo,
+    update,
     db: { setCurrentVideo, addVideo }
   } = useContext(VdnAppContext);
 
@@ -35,11 +36,11 @@ const AddVideo = ({ classes }) => {
   const handleClose = action => event => {
     const { title, url } = values;
     const newVideo = { title, url };
-    /* TODO create method for update storage */
     if (action === 'submit') {
       setUrlVideo(url);
       setCurrentVideo(url);
       addVideo(newVideo);
+      update();
     }
     if (action === 'cancel') console.log('cancel');
     if (action === 'close') console.log('close');

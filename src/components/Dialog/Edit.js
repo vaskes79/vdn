@@ -19,7 +19,8 @@ const Edit = ({ classes, id, url, title, label, note = false, video = false }) =
   const [open, setOpen] = useState(false);
   const [titleForm, setTitleForm] = useState(title);
   const {
-    db: { editVideo, editNote }
+    db: { editVideo, editNote },
+    update
   } = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
@@ -29,6 +30,7 @@ const Edit = ({ classes, id, url, title, label, note = false, video = false }) =
   const handleOk = () => {
     if (video) editVideo(url, titleForm);
     if (note) editNote(id, titleForm);
+    update();
     setOpen(false);
   };
 

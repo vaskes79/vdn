@@ -12,6 +12,7 @@ const AddNoteForm = ({ classes }) => {
     getCurrentTime,
     urlVideo,
     setPlaying,
+    update,
     db: { addNote }
   } = useContext(VdnAppContext);
 
@@ -28,6 +29,7 @@ const AddNoteForm = ({ classes }) => {
       time: getCurrentTime() - TIME_OFFSET,
       url: urlVideo
     };
+    update();
     addNote(noteItem);
     setNote('');
   };
