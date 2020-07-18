@@ -1,10 +1,6 @@
 import { createContext } from 'react';
-import { play, setPlay } from './VdnApp';
 
-const VdnAppContext = createContext({
-  play,
-  setPlay
-});
+const VdnAppContext = createContext();
 
 VdnAppContext.displayName = 'VdnAppContext';
 

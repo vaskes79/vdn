@@ -1,14 +1,11 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
-
+import React, { useState, useContext, useEffect } from 'react';
 import NavBar from 'components/NavBar';
 import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
 import { DBContext } from 'components/db';
-
-const VdnAppContext = createContext({});
-VdnAppContext.displayName = 'VdnAppContext';
+import VdnAppContext from './context';
 
 const VdnApp = () => {
   const { getCurrentVideo } = useContext(DBContext);
@@ -24,7 +21,7 @@ const VdnApp = () => {
     updateUrl();
 
     return () => console.log('VdnApp useEffect unmonut');
-  }, [getCurrentVideo, setUrlVideo]);
+  }, [getCurrentVideo]);
 
   const player = {
     playing,
@@ -37,9 +34,9 @@ const VdnApp = () => {
     <>
       <NavBar />
       <Main>
-        <VdnAppContext.Provider value={player}>
+        <VdnAppContext.Provider value={{ ...player }}>
           <MainLeft>
-            <Video playing={playing} setPlaying={setPlaying} src={urlVideo} />
+            <Video />
           </MainLeft>
           <MainRight>
             <Notes urlNotes={urlVideo} />
@@ -52,4 +49,3 @@ const VdnApp = () => {
 };
 
 export default VdnApp;
-export { VdnAppContext };

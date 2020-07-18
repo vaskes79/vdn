@@ -1,12 +1,14 @@
-import React, { createContext, createRef } from 'react';
+import React, { createContext, createRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ReactPlayer from 'react-player';
+import { VdnAppContext } from '../VdnApp';
 
 import styles from './styles';
 let VideoContext;
-const Video = ({ classes, src, playing, setPlaying }) => {
+const Video = ({ classes }) => {
   const player = createRef();
+  const { playing, setPlaying, urlVideo: src } = useContext(VdnAppContext);
 
   VideoContext = createContext({
     getCurrentTime: () => player.current.getCurrentTime(),
@@ -30,7 +32,7 @@ const Video = ({ classes, src, playing, setPlaying }) => {
 };
 
 Video.propTypes = {
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string,
   playing: PropTypes.bool
 };
 
