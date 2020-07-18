@@ -16,6 +16,7 @@ const Sidebar = ({ classes }) => {
   const {
     db: { getVideoList }
   } = useContext(VdnAppContext);
+
   SidebarContext = createContext({
     openState: val => openState(val)
   });

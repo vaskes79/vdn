@@ -1,19 +1,28 @@
-import React, { useState, useContext, useEffect, createRef } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import NavBar from 'components/NavBar';
 import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
 import VdnAppContext from './context';
+import DB, { setupDB } from 'components/db';
+const db = new DB(setupDB);
 
 const VdnApp = () => {
-  const {
-    db,
-    db: { getCurrentVideo }
-  } = useContext(VdnAppContext);
+  const { getCurrentVideo, getNoteList } = db;
   const [playing, setPlaying] = useState(false);
   const [urlVideo, setUrlVideo] = useState('');
+  const [notes, setNotes] = useState([]);
   const player = createRef();
+
+  useEffect(() => {
+    const getNoteListMemo = async () => {
+      const newNotes = await getNoteList(urlVideo);
+      setNotes(newNotes);
+    };
+
+    getNoteListMemo();
+  }, [getNoteList, urlVideo]);
 
   useEffect(() => {
     const updateUrl = async () => {
@@ -28,6 +37,7 @@ const VdnApp = () => {
 
   const vdnContext = {
     playing,
+    notes,
     getCurrentTime: () => player.current.getCurrentTime(),
     goToTime: time => player.current.seekTo(time),
     setPlaying,
