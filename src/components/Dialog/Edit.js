@@ -20,11 +20,13 @@ const Edit = ({ classes, id, url, title, label, note = false, video = false }) =
   const [titleForm, setTitleForm] = useState(title);
   const {
     db: { editVideo, editNote },
+    setPlaying,
     update
   } = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setPlaying(false);
   };
 
   const handleOk = () => {
@@ -32,15 +34,17 @@ const Edit = ({ classes, id, url, title, label, note = false, video = false }) =
     if (note) editNote(id, titleForm);
     update();
     setOpen(false);
+    setPlaying(true);
   };
 
   const handleCancel = () => {
     setTitleForm(title);
+    setPlaying(true);
     setOpen(false);
   };
 
   const handleEntering = () => {
-    console.log('Edit handleEntering ');
+    setPlaying(false);
   };
 
   const handleChange = name => ({ target: { value } }) => {

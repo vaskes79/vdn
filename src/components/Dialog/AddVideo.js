@@ -15,42 +15,40 @@ import AddIcon from '@material-ui/icons/Add';
 import styles from './styles';
 import { VdnAppContext } from 'components/VdnApp';
 
-const INIT_STATE = {
-  open: false,
-  title: '',
-  url: ''
-};
-
 const AddVideo = ({ classes }) => {
-  const [values, setValues] = useState({ ...INIT_STATE });
+  const [open, setOpen] = useState(false);
+  const [video, setVideo] = useState({ title: '', url: '' });
+
   const {
     setUrlVideo,
     update,
+    setPlaying,
     db: { setCurrentVideo, addVideo }
   } = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
-    setValues({ ...values, open: true });
+    setOpen(true);
+    open ? setPlaying(true) : setPlaying(false);
   };
 
   const handleClose = action => event => {
-    const { title, url } = values;
-    const newVideo = { title, url };
+    const { url } = video;
     if (action === 'submit') {
       setUrlVideo(url);
       setCurrentVideo(url);
-      addVideo(newVideo);
+      addVideo(video);
       update();
     }
-    if (action === 'cancel') console.log('cancel');
-    if (action === 'close') console.log('close');
-    /* end */
+    if (action === 'cancel' || action === 'close') {
+      setOpen(false);
+      setPlaying(true);
+    }
 
-    setValues({ ...INIT_STATE });
+    setOpen(false);
   };
 
   const handleChange = name => ({ target: { value } }) => {
-    setValues({ ...values, [name]: value });
+    setVideo({ ...video, [name]: value });
   };
 
   return (
@@ -66,7 +64,7 @@ const AddVideo = ({ classes }) => {
       </Fab>
       <Dialog
         maxWidth="sm"
-        open={values.open}
+        open={open}
         onClose={handleClose('close')}
         aria-labelledby="form-dialog-title"
         fullWidth

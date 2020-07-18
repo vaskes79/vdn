@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -9,19 +9,23 @@ import {
   IconButton
 } from '@material-ui/core';
 import { Info as InfoIcon } from '@material-ui/icons';
+import { VdnAppContext } from 'components/VdnApp';
 
 import styles from './styles';
 import About from 'components/About';
 
 const Info = ({ classes }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const { setPlaying } = useContext(VdnAppContext);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setPlaying(false);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setPlaying(true);
   };
 
   return (
