@@ -10,24 +10,24 @@ import { TIME_OFFSET } from 'components/constants';
 
 const AddNoteForm = ({ classes }) => {
   let [note, setNote] = useState('');
-  let vdnPlay = useContext(VdnAppContext);
-  let videoPlayer = useContext(VideoContext);
-  let db = useContext(DBContext);
+  let { urlVideo, setPlaying } = useContext(VdnAppContext);
+  let { getCurrentTime } = useContext(VideoContext);
+  let { addNote } = useContext(DBContext);
 
   const onChange = ({ target: { value } }) => {
-    vdnPlay.setPlaying(false);
+    setPlaying(false);
     setNote(value);
   };
 
   const onSubmit = e => {
     e.preventDefault();
-    vdnPlay.setPlaying(true);
+    setPlaying(true);
     const noteItem = {
       title: note,
-      time: videoPlayer.getCurrentTime() - TIME_OFFSET,
-      url: vdnPlay.urlVideo
+      time: getCurrentTime() - TIME_OFFSET,
+      url: urlVideo
     };
-    db.addNote(noteItem);
+    addNote(noteItem);
     setNote('');
   };
 

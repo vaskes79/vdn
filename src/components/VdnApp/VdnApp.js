@@ -4,13 +4,16 @@ import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
-import { DBContext } from 'components/db';
 import VdnAppContext from './context';
 
 const VdnApp = () => {
-  const { getCurrentVideo } = useContext(DBContext);
-  let [playing, setPlaying] = useState(false);
-  let [urlVideo, setUrlVideo] = useState('');
+  const {
+    db,
+    db: { getCurrentVideo }
+  } = useContext(VdnAppContext);
+  const [playing, setPlaying] = useState(false);
+  const [urlVideo, setUrlVideo] = useState('');
+  const [player, setPlayer] = useState({});
 
   useEffect(() => {
     const updateUrl = async () => {
@@ -23,18 +26,21 @@ const VdnApp = () => {
     return () => console.log('VdnApp useEffect unmonut');
   }, [getCurrentVideo]);
 
-  const player = {
+  const vdnContext = {
     playing,
+    player,
+    setPlayer: curPlayer => setPlayer(curPlayer),
     setPlaying,
     urlVideo,
-    setUrlVideo: url => setUrlVideo(url)
+    setUrlVideo: url => setUrlVideo(url),
+    db
   };
 
   return (
     <>
       <NavBar />
       <Main>
-        <VdnAppContext.Provider value={{ ...player }}>
+        <VdnAppContext.Provider value={{ ...vdnContext }}>
           <MainLeft>
             <Video />
           </MainLeft>
