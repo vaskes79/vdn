@@ -1,6 +1,5 @@
 import { createContext } from 'react';
-import DB from '../db/indexedDB';
-import setupDB from '../db/setupDB';
+import DB, { setupDB } from '../db';
 const db = new DB(setupDB);
 
 const VdnAppContext = createContext({

@@ -3,19 +3,20 @@ import { withStyles } from '@material-ui/core/styles';
 import { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 
 import styles from './styles';
-import { DBContext } from 'components/db';
 import { Confirm as DeleteConfirm, Edit } from 'components/Dialog';
 import { VdnAppContext } from 'components/VdnApp';
 import { SidebarContext } from 'components/Sidebar';
 
 const SidebarItem = ({ classes, data: { url, id, title } }) => {
-  const db = useContext(DBContext);
-  const app = useContext(VdnAppContext);
+  const {
+    setUrlVideo,
+    db: { setCurrentVideo }
+  } = useContext(VdnAppContext);
   const sidebar = useContext(SidebarContext);
 
   const onClickItem = async () => {
-    await db.setCurrentVideo(url);
-    app.setUrlVideo(url);
+    await setCurrentVideo(url);
+    setUrlVideo(url);
     sidebar.openState(false);
   };
 

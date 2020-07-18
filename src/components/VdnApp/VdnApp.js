@@ -38,18 +38,18 @@ const VdnApp = () => {
 
   return (
     <>
-      <NavBar />
-      <Main>
-        <VdnAppContext.Provider value={{ ...vdnContext }}>
+      <VdnAppContext.Provider value={{ ...vdnContext }}>
+        <NavBar />
+        <Main>
           <MainLeft>
             <Video />
           </MainLeft>
           <MainRight>
             <Notes />
           </MainRight>
-        </VdnAppContext.Provider>
-      </Main>
-      <Footer />
+        </Main>
+        <Footer />
+      </VdnAppContext.Provider>
     </>
   );
 };
