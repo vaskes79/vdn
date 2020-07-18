@@ -1,4 +1,3 @@
-import Video, { VideoContext } from './Video';
+import Video from './Video';
 
-export { VideoContext };
 export default Video;

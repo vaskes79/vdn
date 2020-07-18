@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, createRef } from 'react';
 import NavBar from 'components/NavBar';
 import { Main, MainLeft, MainRight } from 'components/Main';
 import Video from 'components/Video';
@@ -13,7 +13,7 @@ const VdnApp = () => {
   } = useContext(VdnAppContext);
   const [playing, setPlaying] = useState(false);
   const [urlVideo, setUrlVideo] = useState('');
-  const [player, setPlayer] = useState({});
+  const player = createRef();
 
   useEffect(() => {
     const updateUrl = async () => {
@@ -28,8 +28,8 @@ const VdnApp = () => {
 
   const vdnContext = {
     playing,
-    player,
-    setPlayer: curPlayer => setPlayer(curPlayer),
+    getCurrentTime: () => player.current.getCurrentTime(),
+    goToTime: time => player.current.seekTo(time),
     setPlaying,
     urlVideo,
     setUrlVideo: url => setUrlVideo(url),
@@ -42,7 +42,7 @@ const VdnApp = () => {
         <NavBar />
         <Main>
           <MainLeft>
-            <Video />
+            <Video ref={player} />
           </MainLeft>
           <MainRight>
             <Notes />

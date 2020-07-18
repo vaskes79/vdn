@@ -5,14 +5,14 @@ import { ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/co
 import styles from './styles';
 import { formatTime } from 'components/utils';
 import { Confirm as DeleteConfirm, Edit } from 'components/Dialog';
-import { VideoContext } from 'components/Video';
+import { VdnAppContext } from 'components/VdnApp';
 
 const NoteItem = ({ classes, note: { id, url, title, time } }) => {
   const fTime = formatTime(time);
-  const app = useContext(VideoContext);
+  const { goToTime } = useContext(VdnAppContext);
 
   const onClickItem = () => {
-    app.goToTime(time);
+    goToTime(time);
   };
 
   return (
