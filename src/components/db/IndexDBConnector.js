@@ -1,55 +1,9 @@
-import { openDB } from 'idb';
-import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from 'components/constants';
+import { VDN_LIST, VDN_NOTES, VDN_SETTINGS } from 'components/constants';
+import setupDB from './indexDBsetup';
+import { defaultConfig } from './indexDBconfig';
 
-const setupDB = async ({ settingsStore, demoVideo }) => {
-  let db = await openDB(NAME_DB, VER_DB, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains(VDN_SETTINGS)) {
-        const { html, md, txt, time_offset, current_video } = settingsStore;
-        let settings = db.createObjectStore(VDN_SETTINGS, {
-          keyPath: 'id',
-          autoIncrement: true
-        });
-        settings.createIndex('by_name', 'name', { unique: true });
-        settings.add(html);
-        settings.add(md);
-        settings.add(txt);
-        settings.add(time_offset);
-        settings.add(current_video);
-      }
-
-      if (!db.objectStoreNames.contains(VDN_LIST)) {
-        const { url, title } = demoVideo;
-        const videoList = db.createObjectStore(VDN_LIST, {
-          keyPath: 'url',
-          autoIncrement: true
-        });
-        videoList.createIndex('by_title', 'title');
-        videoList.createIndex('by_url', 'url', { unique: true });
-        videoList.add({
-          title,
-          url
-        });
-      }
-
-      if (!db.objectStoreNames.contains(VDN_NOTES)) {
-        const { notes } = demoVideo;
-        const videoNotes = db.createObjectStore(VDN_NOTES, {
-          keyPath: 'id',
-          autoIncrement: true
-        });
-        videoNotes.createIndex('by_url', 'url');
-        notes.forEach(note => {
-          videoNotes.add(note);
-        });
-      }
-    }
-  });
-  return db;
-};
-
-class IndexDBConnector {
-  constructor(settings) {
+export default class IndexDBConnector {
+  constructor(settings = defaultConfig) {
     this.db = setupDB(settings);
   }
 
@@ -74,7 +28,7 @@ class IndexDBConnector {
     const vdnListStore = tx.objectStore(VDN_LIST);
     const vdnItem = {
       title,
-      url
+      url,
     };
     try {
       await vdnListStore.add(vdnItem);
@@ -84,7 +38,7 @@ class IndexDBConnector {
     }
   };
 
-  removeVideo = async urlID => {
+  removeVideo = async (urlID) => {
     const db = await this.db;
     const tx = db.transaction([VDN_LIST, VDN_NOTES], 'readwrite');
     const vdnListStore = tx.objectStore(VDN_LIST);
@@ -126,7 +80,7 @@ class IndexDBConnector {
     const vdnNoteItem = {
       title,
       url,
-      time
+      time,
     };
     try {
       await vdnNotesStore.add(vdnNoteItem);
@@ -136,7 +90,7 @@ class IndexDBConnector {
     }
   };
 
-  removeNote = async id => {
+  removeNote = async (id) => {
     const db = await this.db;
     const tx = db.transaction(VDN_NOTES, 'readwrite');
     const vdnNotesStore = tx.objectStore(VDN_NOTES);
@@ -176,7 +130,7 @@ class IndexDBConnector {
     }
   };
 
-  getNoteList = async url => {
+  getNoteList = async (url) => {
     const db = await this.db;
     const tx = db.transaction(VDN_NOTES, 'readonly');
     const vdnNotesStore = tx.objectStore(VDN_NOTES);
@@ -209,7 +163,7 @@ class IndexDBConnector {
     }
   };
 
-  setCurrentVideo = async value => {
+  setCurrentVideo = async (value) => {
     const db = await this.db;
     const tx = db.transaction(VDN_SETTINGS, 'readwrite');
     const vdnSettings = tx.objectStore(VDN_SETTINGS);
@@ -224,5 +178,3 @@ class IndexDBConnector {
     }
   };
 }
-
-export default IndexDBConnector;

@@ -5,8 +5,8 @@ import Video from 'components/Video';
 import Footer from 'components/Footer';
 import Notes from 'components/Notes';
 import VdnAppContext from './context';
-import DB, { setupDB } from 'components/db';
-const db = new DB(setupDB);
+import DB from 'components/db';
+const db = new DB();
 
 const VdnApp = () => {
   const { getCurrentVideo, getNoteList } = db;
@@ -40,12 +40,12 @@ const VdnApp = () => {
     playing,
     notes,
     getCurrentTime: () => player.current.getCurrentTime(),
-    goToTime: time => player.current.seekTo(time),
+    goToTime: (time) => player.current.seekTo(time),
     setPlaying,
     urlVideo,
-    update: () => setUpdateVer(curentVer => curentVer + 1),
-    setUrlVideo: url => setUrlVideo(url),
-    db
+    update: () => setUpdateVer((curentVer) => curentVer + 1),
+    setUrlVideo: (url) => setUrlVideo(url),
+    db,
   };
 
   return (

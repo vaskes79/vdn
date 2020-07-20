@@ -1,4 +1,2 @@
-import DB from './indexedDB';
-import setupDB from './setupDB';
+import DB from './IndexDBConnector';
 export default DB;
-export { setupDB };
