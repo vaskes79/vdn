@@ -32,7 +32,7 @@ const NoteItem = ({ classes, note: { id, url, title, time } }) => {
           note={true}
           label={'Change Description Note'}
         />
-        <DeleteConfirm id={id} title={fTime} description={title} />
+        <DeleteConfirm type={'note'} id={id} title={fTime} description={title} />
       </ListItemSecondaryAction>
     </ListItem>
   );

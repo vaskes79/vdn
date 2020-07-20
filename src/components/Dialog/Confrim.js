@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -15,29 +15,41 @@ import { VdnAppContext } from 'components/VdnApp';
 
 import styles from './styles';
 
-const Confirm = ({ classes, id, title, description }) => {
+const Confirm = ({ classes, type, id, title, description }) => {
+  const [open, setOpen] = useState(false);
   const {
-    db: { removeNote }
+    setPlaying,
+    update,
+    setUrlVideo,
+    db: { removeNote, removeVideo }
   } = useContext(VdnAppContext);
-  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
+    setPlaying(false);
   };
 
   const handleOk = () => {
-    console.log('Confirm handleOk ');
-    removeNote(id);
+    if (type === 'note') {
+      removeNote(id);
+      setPlaying(true);
+    }
+    if (type === 'video') {
+      removeVideo(id);
+      setUrlVideo('https://youtu.be/cCOL7MC4Pl0');
+      setPlaying(false);
+    }
+    update();
     setOpen(false);
   };
 
   const handleCancel = () => {
-    console.log('Confirm handleCancel ');
     setOpen(false);
+    setPlaying(true);
   };
 
   const handleEntering = () => {
-    console.log('Confirm handleEntering ');
+    setPlaying(false);
   };
 
   return (

@@ -36,6 +36,7 @@ const VdnApp = () => {
 
   const vdnContext = {
     updateVer,
+    player,
     playing,
     notes,
     getCurrentTime: () => player.current.getCurrentTime(),

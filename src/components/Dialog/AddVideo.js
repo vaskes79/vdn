@@ -28,7 +28,7 @@ const AddVideo = ({ classes }) => {
 
   const handleClickOpen = () => {
     setOpen(true);
-    open ? setPlaying(true) : setPlaying(false);
+    setPlaying(false);
   };
 
   const handleClose = action => event => {

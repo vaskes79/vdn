@@ -98,6 +98,8 @@ class IndexDBConnector {
         notesCursor = await notesCursor.continue();
       }
       await tx.done;
+      // todo: make dinamic
+      this.setCurrentVideo('https://youtu.be/cCOL7MC4Pl0');
     } catch (err) {
       console.log('removeVideo error', err.message);
     }
