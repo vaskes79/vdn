@@ -1,7 +1,7 @@
 /**
  * Constants for setup indexDB and application settings
  */
-export const enum AppSetup {
+export enum AppSetup {
   /** 
   * The base name for DB in indexDB
   * @type {string}  

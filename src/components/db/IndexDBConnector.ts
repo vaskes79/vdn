@@ -1,4 +1,4 @@
-import { VDN_LIST, VDN_NOTES, VDN_SETTINGS } from 'components/constants';
+import { AppSetup } from 'components/constants';
 import setupDB from './indexDBsetup';
 import { defaultConfig } from './indexDBconfig';
 
@@ -9,8 +9,8 @@ export default class IndexDBConnector {
 
   setSettings = async (name, value) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_SETTINGS, 'readwrite');
-    const store = tx.objectStore(VDN_SETTINGS);
+    const tx = db.transaction(AppSetup.SETTINGS, 'readwrite');
+    const store = tx.objectStore(AppSetup.SETTINGS);
     const index = store.index('by_name');
     try {
       const reqObj = await index.get(name);
@@ -24,8 +24,8 @@ export default class IndexDBConnector {
 
   addVideo = async ({ title, url }) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_LIST, 'readwrite');
-    const vdnListStore = tx.objectStore(VDN_LIST);
+    const tx = db.transaction(AppSetup.LIST, 'readwrite');
+    const vdnListStore = tx.objectStore(AppSetup.LIST);
     const vdnItem = {
       title,
       url,
@@ -40,9 +40,9 @@ export default class IndexDBConnector {
 
   removeVideo = async (urlID) => {
     const db = await this.db;
-    const tx = db.transaction([VDN_LIST, VDN_NOTES], 'readwrite');
-    const vdnListStore = tx.objectStore(VDN_LIST);
-    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    const tx = db.transaction([AppSetup.LIST, AppSetup.NOTES], 'readwrite');
+    const vdnListStore = tx.objectStore(AppSetup.LIST);
+    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
     const indexNote = vdnNotesStore.index('by_url');
     try {
       await vdnListStore.delete(urlID);
@@ -61,8 +61,8 @@ export default class IndexDBConnector {
 
   editVideo = async (urlID, title) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_LIST, 'readwrite');
-    const vdnListStore = tx.objectStore(VDN_LIST);
+    const tx = db.transaction(AppSetup.LIST, 'readwrite');
+    const vdnListStore = tx.objectStore(AppSetup.LIST);
     try {
       let video = await vdnListStore.get(urlID);
       video = { ...video, title };
@@ -75,8 +75,8 @@ export default class IndexDBConnector {
 
   addNote = async ({ url, title, time }) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    const tx = db.transaction(AppSetup.NOTES, 'readwrite');
+    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
     const vdnNoteItem = {
       title,
       url,
@@ -92,8 +92,8 @@ export default class IndexDBConnector {
 
   removeNote = async (id) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    const tx = db.transaction(AppSetup.NOTES, 'readwrite');
+    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
 
     try {
       await vdnNotesStore.delete(id);
@@ -105,8 +105,8 @@ export default class IndexDBConnector {
 
   editNote = async (urlID, title) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    const tx = db.transaction(AppSetup.NOTES, 'readwrite');
+    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
     try {
       let note = await vdnNotesStore.get(urlID);
       note = { ...note, title };
@@ -119,8 +119,8 @@ export default class IndexDBConnector {
 
   getVideoList = async () => {
     const db = await this.db;
-    const tx = db.transaction(VDN_LIST, 'readonly');
-    const vdnListStore = tx.objectStore(VDN_LIST);
+    const tx = db.transaction(AppSetup.LIST, 'readonly');
+    const vdnListStore = tx.objectStore(AppSetup.LIST);
     try {
       let videoList = await vdnListStore.getAll();
       await tx.done;
@@ -132,8 +132,8 @@ export default class IndexDBConnector {
 
   getNoteList = async (url) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_NOTES, 'readonly');
-    const vdnNotesStore = tx.objectStore(VDN_NOTES);
+    const tx = db.transaction(AppSetup.NOTES, 'readonly');
+    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
     try {
       let notes = null;
       if (url) {
@@ -151,8 +151,8 @@ export default class IndexDBConnector {
 
   getCurrentVideo = async () => {
     const db = await this.db;
-    const tx = db.transaction(VDN_SETTINGS, 'readonly');
-    const vdnSettings = tx.objectStore(VDN_SETTINGS);
+    const tx = db.transaction(AppSetup.SETTINGS, 'readonly');
+    const vdnSettings = tx.objectStore(AppSetup.SETTINGS);
     try {
       const index = vdnSettings.index('by_name');
       let currentVideo = await index.getAll('current_video');
@@ -165,8 +165,8 @@ export default class IndexDBConnector {
 
   setCurrentVideo = async (value) => {
     const db = await this.db;
-    const tx = db.transaction(VDN_SETTINGS, 'readwrite');
-    const vdnSettings = tx.objectStore(VDN_SETTINGS);
+    const tx = db.transaction(AppSetup.SETTINGS, 'readwrite');
+    const vdnSettings = tx.objectStore(AppSetup.SETTINGS);
     try {
       const index = vdnSettings.index('by_name');
       let currentVideo = await index.get('current_video');

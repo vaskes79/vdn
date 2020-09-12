@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 import styles from './styles';
 import { VdnAppContext } from 'components/VdnApp';
-import { TIME_OFFSET } from 'components/constants';
+import { AppSetup } from 'components/constants';
 
 const AddNoteForm = ({ classes }) => {
   let [note, setNote] = useState('');
@@ -13,7 +13,7 @@ const AddNoteForm = ({ classes }) => {
     urlVideo,
     setPlaying,
     update,
-    db: { addNote }
+    db: { addNote },
   } = useContext(VdnAppContext);
 
   const onChange = ({ target: { value } }) => {
@@ -21,13 +21,13 @@ const AddNoteForm = ({ classes }) => {
     setNote(value);
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     setPlaying(true);
     const noteItem = {
       title: note,
-      time: getCurrentTime() - TIME_OFFSET,
-      url: urlVideo
+      time: getCurrentTime() - AppSetup.TIME_OFFSET,
+      url: urlVideo,
     };
     update();
     addNote(noteItem);
