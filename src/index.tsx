@@ -5,7 +5,7 @@ import { CssBaseline } from '@material-ui/core';
 
 import * as serviceWorker from './serviceWorker';
 import './index.css';
-import VdnApp from 'components/VdnApp';
+import VdnApp from './components/VdnApp';
 
 const theme = createMuiTheme();
 
