@@ -2,12 +2,13 @@ import { AppSetup } from 'components/constants';
 import setupDB from './indexDBsetup';
 import { defaultConfig } from './indexDBconfig';
 
-export default class IndexDBConnector {
+export default class IndexDBConnector  {
   constructor(settings = defaultConfig) {
     this.db = setupDB(settings);
   }
+  private db: any;
 
-  setSettings = async (name, value) => {
+  setSettings = async (name: string, value: string) => {
     const db = await this.db;
     const tx = db.transaction(AppSetup.SETTINGS, 'readwrite');
     const store = tx.objectStore(AppSetup.SETTINGS);
@@ -22,7 +23,8 @@ export default class IndexDBConnector {
     }
   };
 
-  addVideo = async ({ title, url }) => {
+  addVideo = async (video: Video) => {
+    const { title, url } = video;
     const db = await this.db;
     const tx = db.transaction(AppSetup.LIST, 'readwrite');
     const vdnListStore = tx.objectStore(AppSetup.LIST);
@@ -38,7 +40,7 @@ export default class IndexDBConnector {
     }
   };
 
-  removeVideo = async (urlID) => {
+  removeVideo = async (urlID: string|number) => {
     const db = await this.db;
     const tx = db.transaction([AppSetup.LIST, AppSetup.NOTES], 'readwrite');
     const vdnListStore = tx.objectStore(AppSetup.LIST);
@@ -59,7 +61,7 @@ export default class IndexDBConnector {
     }
   };
 
-  editVideo = async (urlID, title) => {
+  editVideo = async (urlID: string|number, title: string) => {
     const db = await this.db;
     const tx = db.transaction(AppSetup.LIST, 'readwrite');
     const vdnListStore = tx.objectStore(AppSetup.LIST);
@@ -73,7 +75,8 @@ export default class IndexDBConnector {
     }
   };
 
-  addNote = async ({ url, title, time }) => {
+  addNote = async (noteItem: Note) => {
+    const{ url, title, time } = noteItem;
     const db = await this.db;
     const tx = db.transaction(AppSetup.NOTES, 'readwrite');
     const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
@@ -90,7 +93,7 @@ export default class IndexDBConnector {
     }
   };
 
-  removeNote = async (id) => {
+  removeNote = async (id: string|number) => {
     const db = await this.db;
     const tx = db.transaction(AppSetup.NOTES, 'readwrite');
     const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
@@ -103,7 +106,7 @@ export default class IndexDBConnector {
     }
   };
 
-  editNote = async (urlID, title) => {
+  editNote = async (urlID: string|number, title: string) => {
     const db = await this.db;
     const tx = db.transaction(AppSetup.NOTES, 'readwrite');
     const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
@@ -130,7 +133,7 @@ export default class IndexDBConnector {
     }
   };
 
-  getNoteList = async (url) => {
+  getNoteList = async (url:string) => {
     const db = await this.db;
     const tx = db.transaction(AppSetup.NOTES, 'readonly');
     const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
@@ -163,7 +166,7 @@ export default class IndexDBConnector {
     }
   };
 
-  setCurrentVideo = async (value) => {
+  setCurrentVideo = async (value:string|number) => {
     const db = await this.db;
     const tx = db.transaction(AppSetup.SETTINGS, 'readwrite');
     const vdnSettings = tx.objectStore(AppSetup.SETTINGS);
