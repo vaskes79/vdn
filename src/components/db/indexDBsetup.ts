@@ -1,12 +1,13 @@
 import { openDB } from 'idb';
-import { NAME_DB, VER_DB, VDN_LIST, VDN_NOTES, VDN_SETTINGS } from 'components/constants';
+import { AppSetup } from 'components/constants';
 
 const setupDB = async ({ settingsStore, demoVideo }) => {
-  let db = await openDB(NAME_DB, VER_DB, {
+
+  let db = await openDB(AppSetup.NAME, AppSetup.VER, {
     upgrade(db) {
-      if (!db.objectStoreNames.contains(VDN_SETTINGS)) {
+      if (!db.objectStoreNames.contains(AppSetup.SETTINGS)) {
         const { html, md, txt, time_offset, current_video } = settingsStore;
-        let settings = db.createObjectStore(VDN_SETTINGS, {
+        let settings = db.createObjectStore(AppSetup.SETTINGS, {
           keyPath: 'id',
           autoIncrement: true,
         });
@@ -18,9 +19,9 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
         settings.add(current_video);
       }
 
-      if (!db.objectStoreNames.contains(VDN_LIST)) {
+      if (!db.objectStoreNames.contains(AppSetup.LIST)) {
         const { url, title } = demoVideo;
-        const videoList = db.createObjectStore(VDN_LIST, {
+        const videoList = db.createObjectStore(AppSetup.LIST, {
           keyPath: 'url',
           autoIncrement: true,
         });
@@ -32,9 +33,9 @@ const setupDB = async ({ settingsStore, demoVideo }) => {
         });
       }
 
-      if (!db.objectStoreNames.contains(VDN_NOTES)) {
+      if (!db.objectStoreNames.contains(AppSetup.NOTES)) {
         const { notes } = demoVideo;
-        const videoNotes = db.createObjectStore(VDN_NOTES, {
+        const videoNotes = db.createObjectStore(AppSetup.NOTES, {
           keyPath: 'id',
           autoIncrement: true,
         });
