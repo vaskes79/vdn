@@ -12,6 +12,9 @@
     "jsx": {},
     "es_modules": {},
     "requirejs": {},
-    "commonjs": {}
+    "commonjs": {},
+    "webpack": {
+      "configPath": "./node_modules/react-scripts/config/webpack.config.dev.js"
+    }
   }
 }
