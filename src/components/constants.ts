@@ -17,17 +17,17 @@ export enum AppSetup {
   * Name Table with list added videos 
   * @type string
   */
-  LIST = "VDN_LIST",
+  LIST = "LIST_VIDEO",
   /**
   *  Name Table with notes for video 
   * @type string
   */
-  NOTES = "VDN_NOTES",
+  NOTES = "NOTES",
   /** 
   * Name Table for settings application (format txt, md, html, etc.) 
   * @type string
   */
-  SETTINGS="VDN_SETTINGS",
+  SETTINGS="SETTINGS",
   /**
   * Teme offcet when user start adding new note 
   * @type number
