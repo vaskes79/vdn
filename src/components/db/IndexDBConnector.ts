@@ -2,182 +2,115 @@ import { AppSetup } from 'components/constants';
 import setupDB from './indexDBsetup';
 import { defaultConfig } from './indexDBconfig';
 
-export default class IndexDBConnector  {
+export default class IndexDBConnector {
   constructor(settings = defaultConfig) {
     this.db = setupDB(settings);
   }
-  private db: any;
+  private db;
 
-  setSettings = async (name: string, value: string) => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.SETTINGS, 'readwrite');
-    const store = tx.objectStore(AppSetup.SETTINGS);
-    const index = store.index('by_name');
+  getStore = async (storeName: string, errorMSG?: string): Promise<any> => {
     try {
-      const reqObj = await index.get(name);
-      const newObj = { ...reqObj, value };
-      await store.put(newObj);
-      await tx.done;
+      const db: IDBDatabase = await this.db;
+      const tx: IDBTransaction = db.transaction(storeName, 'readwrite');
+      const store: IDBObjectStore = tx.objectStore(storeName);
+      return store;
     } catch (err) {
-      console.log('setSettings error', err.message);
+      console.log(errorMSG, err.message);
     }
   };
 
-  addVideo = async (video: Video) => {
+  setSettings = async (name: string, value: string): Promise<void> => {
+    const store: IDBObjectStore = await this.getStore(AppSetup.SETTINGS);
+    const index = store.index('by_name');
+    const reqObj = index.get(name);
+    const newObj = { ...reqObj, value };
+    store.put(newObj);
+  };
+
+  addVideo = async (video: Video): Promise<void> => {
     const { title, url } = video;
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.LIST, 'readwrite');
-    const vdnListStore = tx.objectStore(AppSetup.LIST);
+    const vdnListStore: IDBObjectStore = await this.getStore(AppSetup.LIST);
     const vdnItem = {
       title,
       url,
     };
-    try {
-      await vdnListStore.add(vdnItem);
-      await tx.done;
-    } catch (err) {
-      console.log('addVideo error', err.message);
-    }
+    vdnListStore.add(vdnItem);
   };
 
-  removeVideo = async (urlID: string|number) => {
-    const db = await this.db;
-    const tx = db.transaction([AppSetup.LIST, AppSetup.NOTES], 'readwrite');
-    const vdnListStore = tx.objectStore(AppSetup.LIST);
-    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
+  removeVideo = async (urlID: string | number) => {
+    const vdnListStore = await this.getStore(AppSetup.LIST, 'remove video method videolist');
+    const vdnNotesStore = await this.getStore(AppSetup.NOTES, 'remove video method notes');
     const indexNote = vdnNotesStore.index('by_url');
-    try {
-      await vdnListStore.delete(urlID);
-      let notesCursor = await indexNote.openCursor(IDBKeyRange.only(urlID));
-      while (notesCursor) {
-        await notesCursor.delete(notesCursor.primaryKey);
-        notesCursor = await notesCursor.continue();
-      }
-      await tx.done;
-      // todo: make dinamic
-      this.setCurrentVideo('https://youtu.be/cCOL7MC4Pl0');
-    } catch (err) {
-      console.log('removeVideo error', err.message);
+    vdnListStore.delete(urlID);
+    let notesCursor = await indexNote.openCursor(IDBKeyRange.only(urlID));
+    while (notesCursor) {
+      await notesCursor.delete(notesCursor.primaryKey);
+      notesCursor = await notesCursor.continue();
     }
+    // todo: make dinamic
+    this.setCurrentVideo('https://youtu.be/cCOL7MC4Pl0');
   };
 
-  editVideo = async (urlID: string|number, title: string) => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.LIST, 'readwrite');
-    const vdnListStore = tx.objectStore(AppSetup.LIST);
-    try {
-      let video = await vdnListStore.get(urlID);
-      video = { ...video, title };
-      await vdnListStore.put(video);
-      await tx.done;
-    } catch (err) {
-      console.log('editVideo error', err.message);
-    }
+  editVideo = async (urlID: string | number, title: string) => {
+    const vdnListStore = await this.getStore(AppSetup.LIST, 'edit video error');
+    let video = await vdnListStore.get(urlID);
+    video = { ...video, title };
+    vdnListStore.put(video);
   };
 
   addNote = async (noteItem: Note) => {
-    const{ url, title, time } = noteItem;
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
+    const { url, title, time } = noteItem;
+    const vdnNotesStore = await this.getStore(AppSetup.NOTES, 'add note error');
     const vdnNoteItem = {
       title,
       url,
       time,
     };
-    try {
-      await vdnNotesStore.add(vdnNoteItem);
-      await tx.done;
-    } catch (err) {
-      console.log('addNote error', err.message);
-    }
+    vdnNotesStore.add(vdnNoteItem);
   };
 
-  removeNote = async (id: string|number) => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
-
-    try {
-      await vdnNotesStore.delete(id);
-      await tx.done;
-    } catch (err) {
-      console.log('removeVideo error', err.message);
-    }
+  removeNote = async (id: string | number) => {
+    const vdnNotesStore = await this.getStore(AppSetup.NOTES, 'remove note errors');
+    vdnNotesStore.delete(id);
   };
 
-  editNote = async (urlID: string|number, title: string) => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.NOTES, 'readwrite');
-    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
-    try {
-      let note = await vdnNotesStore.get(urlID);
-      note = { ...note, title };
-      await vdnNotesStore.put(note);
-      await tx.done;
-    } catch (err) {
-      console.log('editVideo error', err.message);
-    }
+  editNote = async (urlID: string | number, title: string) => {
+    const vdnNotesStore = await this.getStore(AppSetup.NOTES, 'edit note errors');
+    let note = await vdnNotesStore.get(urlID);
+    note = { ...note, title };
+    vdnNotesStore.put(note);
   };
 
   getVideoList = async () => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.LIST, 'readonly');
-    const vdnListStore = tx.objectStore(AppSetup.LIST);
-    try {
-      let videoList = await vdnListStore.getAll();
-      await tx.done;
-      return videoList;
-    } catch (err) {
-      console.log('getVideoList error', err.message);
-    }
+    const vdnListStore = await this.getStore(AppSetup.LIST, 'get video lsit error');
+    let videoList = await vdnListStore.getAll();
+    return videoList;
   };
 
-  getNoteList = async (url:string) => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.NOTES, 'readonly');
-    const vdnNotesStore = tx.objectStore(AppSetup.NOTES);
-    try {
-      let notes = null;
-      if (url) {
-        const index = vdnNotesStore.index('by_url');
-        notes = await index.getAll(url);
-      } else {
-        notes = await vdnNotesStore.getAll();
-      }
-      await tx.done;
-      return notes;
-    } catch (err) {
-      console.log('getNoteList error', err.message);
+  getNoteList = async (url: string) => {
+    const vdnNotesStore = await this.getStore(AppSetup.NOTES, 'get note list errors');
+    let notes = null;
+    if (url) {
+      const index = vdnNotesStore.index('by_url');
+      notes = await index.getAll(url);
+    } else {
+      notes = await vdnNotesStore.getAll();
     }
+    return notes;
   };
 
   getCurrentVideo = async () => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.SETTINGS, 'readonly');
-    const vdnSettings = tx.objectStore(AppSetup.SETTINGS);
-    try {
-      const index = vdnSettings.index('by_name');
-      let currentVideo = await index.getAll('current_video');
-      await tx.done;
-      return currentVideo;
-    } catch (err) {
-      console.log('getCurrentVideo error', err.message);
-    }
+    const vdnSettings = await this.getStore(AppSetup.SETTINGS, 'get current video error');
+    const index = vdnSettings.index('by_name');
+    let currentVideo = await index.getAll('current_video');
+    return currentVideo;
   };
 
-  setCurrentVideo = async (value:string|number) => {
-    const db = await this.db;
-    const tx = db.transaction(AppSetup.SETTINGS, 'readwrite');
-    const vdnSettings = tx.objectStore(AppSetup.SETTINGS);
-    try {
-      const index = vdnSettings.index('by_name');
-      let currentVideo = await index.get('current_video');
-      await index.objectStore.put({ ...currentVideo, value });
-      await tx.done;
-      return currentVideo;
-    } catch (err) {
-      console.log('getCurrentVideo error', err.message);
-    }
+  setCurrentVideo = async (value: string | number) => {
+    const vdnSettings = await this.getStore(AppSetup.SETTINGS, 'set current video');
+    const index = vdnSettings.index('by_name');
+    let currentVideo = await index.get('current_video');
+    await index.objectStore.put({ ...currentVideo, value });
+    return currentVideo;
   };
 }

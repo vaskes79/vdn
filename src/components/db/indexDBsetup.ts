@@ -5,7 +5,7 @@ const setupDB = async (config: Config):Promise<any> => {
 
   const {settingsStore, demoVideo} = config;
 
-  let db = await openDB(AppSetup.NAME, AppSetup.VER, {
+  const db = await openDB(AppSetup.NAME, AppSetup.VER, {
     upgrade(db) {
       if (!db.objectStoreNames.contains(AppSetup.SETTINGS)) {
         const { html, md, txt, time_offset, current_video } = settingsStore;
@@ -48,6 +48,7 @@ const setupDB = async (config: Config):Promise<any> => {
       }
     },
   });
+
   return db;
 };
 
