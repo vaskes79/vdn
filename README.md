@@ -7,6 +7,8 @@ and creating a short note with title and the time link to fragment video.
 
 All data stored into indexDB on client side
 
+Need refactoring.
+
 ## library
 
 - [material-ui](https://material-ui.com)
