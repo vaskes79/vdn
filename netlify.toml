@@ -1,6 +1,7 @@
 [build]
   command = "yarn build"
   publish = "dist"
+  image = "ubuntu-22"
 
 [build.environment]
   NODE_VERSION = "20"
