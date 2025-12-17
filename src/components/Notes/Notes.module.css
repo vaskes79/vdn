@@ -1,0 +1,103 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	height: 100%;
+}
+
+.controls {
+	display: flex;
+	gap: 8px;
+	flex-wrap: wrap;
+}
+
+.exportButton {
+	padding: 8px 16px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: white;
+	cursor: pointer;
+	font-size: 0.875rem;
+	font-weight: 500;
+	transition: background-color 0.2s;
+}
+
+.exportButton:hover {
+	background: #f5f5f5;
+}
+
+.controlsHiddenField {
+	position: absolute;
+	left: -9999px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.addNoteForm {
+	display: flex;
+}
+
+.input {
+	flex: 1;
+	padding: 8px 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 0.9rem;
+}
+
+.input:focus {
+	outline: none;
+	border-color: #0066cc;
+}
+
+.noteList {
+	flex: 1;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.noteItem {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px;
+	border-radius: 4px;
+	transition: background-color 0.2s;
+}
+
+.noteItem:hover {
+	background-color: #f5f5f5;
+}
+
+.noteItemButton {
+	flex: 1;
+	text-align: left;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+}
+
+.noteItemContent {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.noteItemTime {
+	font-size: 0.75rem;
+	color: #666;
+	font-weight: 500;
+}
+
+.noteItemTitle {
+	font-size: 0.9rem;
+}
+
+.noteItemActions {
+	display: flex;
+	gap: 4px;
+}
+
