@@ -1,45 +1,40 @@
 {
-  "name": "vdn",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.5.1",
-    "@material-ui/icons": "^4.5.1",
-    "@mdi/js": "^4.5.95",
-    "@mdi/react": "^1.2.1",
-    "@types/jest": "^26.0.13",
-    "@types/node": "^14.10.1",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "idb": "^4.0.5",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-player": "^1.13.0",
-    "react-scripts": "3.2.0",
-    "typescript": "^4.0.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@types/material-ui": "^0.21.8"
-  }
+	"name": "vdn",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"lint": "biome check .",
+		"format": "biome format --write ."
+	},
+	"dependencies": {
+		"dexie": "^4.0.10",
+		"react": "^19.2.1",
+		"react-dom": "^19.2.1",
+		"zustand": "^5.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@types/node": "^25.0.3",
+		"@types/react": "^19.0.0",
+		"@types/react-dom": "^19.0.0",
+		"@vitejs/plugin-react": "^4.3.4",
+		"typescript": "^5.7.2",
+		"vite": "^6.0.3"
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }
