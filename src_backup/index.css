@@ -1,9 +1,0 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap&subset=cyrillic');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-
-body {
-  margin: 0;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
