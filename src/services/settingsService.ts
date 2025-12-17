@@ -1,5 +1,5 @@
 import { db } from "@db";
-import type { Setting, AppSettings } from "@types";
+import type { AppSettings } from "@types";
 
 const DEFAULT_SETTINGS: AppSettings = {
   currentVideo: "https://youtu.be/cCOL7MC4Pl0",
