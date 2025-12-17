@@ -17,4 +17,3 @@ export function getVideoUrlWithTime(url: string, time: number): string {
 export function isValidVideoUrl(url: string): boolean {
 	return /youtu\.?be|vimeo/.test(url);
 }
-

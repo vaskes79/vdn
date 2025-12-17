@@ -15,4 +15,3 @@ export function parseTime(timeString: string): number {
 	}
 	return 0;
 }
-
