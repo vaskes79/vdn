@@ -1,12 +1,17 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense, lazy } from "react";
 import { seedDatabase } from "@db";
 import { useVideoStore, useNotesStore } from "@store";
 import { PlayerContext } from "@components/Video/PlayerContext";
 import { NavBar } from "@components/NavBar";
 import { Main, MainLeft, MainRight, Footer } from "@components/Layout";
-import { VideoPlayer } from "@components/Video";
 import { Notes } from "@components/Notes";
 import type { PlayerInstance } from "@components/Video/PlayerContext";
+
+const VideoPlayer = lazy(() =>
+  import("@components/Video").then((module) => ({
+    default: module.VideoPlayer,
+  }))
+);
 
 export function App() {
   const { currentVideoUrl, loadVideos } = useVideoStore();
@@ -38,7 +43,23 @@ export function App() {
       <NavBar />
       <Main>
         <MainLeft>
-          <VideoPlayer ref={playerRef} />
+          <Suspense
+            fallback={
+              <div
+                style={{
+                  width: "100%",
+                  height: `${window.innerHeight - 150}px`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                Загрузка плеера...
+              </div>
+            }
+          >
+            <VideoPlayer ref={playerRef} />
+          </Suspense>
         </MainLeft>
         <MainRight>
           <Notes />
