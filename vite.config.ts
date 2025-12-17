@@ -27,23 +27,6 @@ export default defineConfig({
             return "react-vendor";
           }
 
-          // react-player и все его зависимости в один чанк
-          // Это предотвращает проблемы с порядком инициализации модулей
-          if (
-            id.includes("node_modules/react-player") ||
-            id.includes("node_modules/hls.js") ||
-            id.includes("node_modules/hls-video-element") ||
-            id.includes("node_modules/dashjs") ||
-            id.includes("node_modules/dash-video-element")
-          ) {
-            return "react-player";
-          }
-
-          // lodash в отдельный чанк (большая библиотека)
-          if (id.includes("node_modules/lodash")) {
-            return "lodash";
-          }
-
           // Zustand в отдельный чанк
           if (id.includes("node_modules/zustand")) {
             return "zustand";
@@ -59,7 +42,8 @@ export default defineConfig({
             return "radix-ui";
           }
 
-          // Остальные node_modules в vendor
+          // Остальные node_modules (включая react-player и его зависимости) в vendor
+          // Это позволяет Vite автоматически управлять порядком загрузки модулей
           if (id.includes("node_modules")) {
             return "vendor";
           }
