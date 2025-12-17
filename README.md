@@ -23,16 +23,16 @@ npm install
 ### Запуск в режиме разработки
 
 ```bash
-yarn start
+yarn dev
 ```
 
 или
 
 ```bash
-npm start
+npm run dev
 ```
 
-Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000)
+Приложение будет доступно по адресу [http://localhost:5173](http://localhost:5173)
 
 ### Сборка для продакшена
 
@@ -49,9 +49,12 @@ npm run build
 ## Технологии
 
 - [React](https://reactjs.org/) - UI библиотека
-- [Material-UI](https://material-ui.com) - компоненты интерфейса
+- [TypeScript](https://www.typescriptlang.org/) - типизация
+- [Vite](https://vitejs.dev/) - инструменты сборки
 - [react-player](https://github.com/cookpete/react-player) - проигрыватель видео
-- [idb](https://github.com/jakearchibald/idb) - работа с IndexedDB
+- [Dexie](https://dexie.org/) - работа с IndexedDB
+- [Zustand](https://github.com/pmndrs/zustand) - управление состоянием
+- [Radix UI](https://www.radix-ui.com/) - компоненты интерфейса
 
 ## Документация
 
@@ -61,6 +64,9 @@ npm run build
 
 - [Правила проекта](docs/project-rules.md) - правила работы с документацией и структурой проекта
 - [Архитектура](docs/architecture.md) - описание архитектуры приложения, компонентов, работы с БД и потоков данных
+- [План модернизации](docs/plan-modernization.md) - план модернизации проекта с принципом "Functionality First"
+- [Статус модернизации](docs/modernization-status.md) - текущий статус модернизации проекта
+- [Обоснование типов](docs/types-design-rationale.md) - обоснование использования интерфейсов вместо type в проекте
 
 ### Пользовательские истории
 
