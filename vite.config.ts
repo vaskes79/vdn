@@ -27,21 +27,15 @@ export default defineConfig({
             return "react-vendor";
           }
 
-          // hls.js в отдельный чанк
-          if (id.includes("node_modules/hls.js") || id.includes("node_modules/hls-video-element")) {
-            return "hls-player";
-          }
-
-          // dashjs в отдельный чанк
+          // react-player и все его зависимости в один чанк
+          // Это предотвращает проблемы с порядком инициализации модулей
           if (
+            id.includes("node_modules/react-player") ||
+            id.includes("node_modules/hls.js") ||
+            id.includes("node_modules/hls-video-element") ||
             id.includes("node_modules/dashjs") ||
             id.includes("node_modules/dash-video-element")
           ) {
-            return "dash-player";
-          }
-
-          // react-player (без hls/dash) в отдельный чанк
-          if (id.includes("node_modules/react-player")) {
             return "react-player";
           }
 
