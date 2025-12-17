@@ -1,11 +1,11 @@
 # Статус модернизации VDN
 
-> Обновлено: {{ date }}
+> Обновлено: 2025-12-17
 
 ## Общий прогресс
 
 - [ ] Фаза 1: Инициализация проекта
-- [ ] Фаза 2: Типы и интерфейсы
+- [x] Фаза 2: Типы и интерфейсы
 - [ ] Фаза 3: Data Layer + Services
 - [ ] Фаза 4: Zustand Stores + Утилиты
 - [ ] Фаза 5: Тестовое приложение
@@ -24,6 +24,7 @@
 - [ ] Базовые зависимости установлены
 
 **Зависимости:**
+
 - [ ] react ^19.2.1
 - [ ] react-dom ^19.2.1
 - [ ] zustand ^5.0.0
@@ -37,11 +38,11 @@
 
 ### Фаза 2: Типы и интерфейсы
 
-- [ ] `types/video.ts` - Video, VideoInput
-- [ ] `types/note.ts` - Note, NoteInput
-- [ ] `types/settings.ts` - Setting, AppSettings
-- [ ] `types/store.ts` - Store interfaces
-- [ ] `types/index.ts` - Реэкспорт всех типов
+- [x] `types/video.ts` - Video, VideoInput
+- [x] `types/note.ts` - Note, NoteInput
+- [x] `types/settings.ts` - Setting, AppSettings
+- [x] `types/store.ts` - Store interfaces
+- [x] `types/index.ts` - Реэкспорт всех типов
 
 ---
 
@@ -120,6 +121,7 @@
 ### Фаза 6: UI Layer
 
 **Дополнительные зависимости:**
+
 - [ ] react-player ^2.16.0
 - [ ] @radix-ui/react-dialog ^1.1.4
 - [ ] @radix-ui/react-tooltip ^1.1.5
@@ -150,5 +152,20 @@
 
 ## Примечания
 
-_Заметки о ходе реализации будут добавляться здесь_
+### 2025-12-17: Фаза 2 завершена
 
+✅ Все типы и интерфейсы реализованы:
+
+- `types/video.ts` - Video, VideoInput
+- `types/note.ts` - Note, NoteInput
+- `types/settings.ts` - Setting, AppSettings
+- `types/store.ts` - Store interfaces (VideoStoreState/Actions, NotesStoreState/Actions, AppStoreState/Actions)
+- `types/index.ts` - Реэкспорт всех типов
+
+Дополнительно:
+
+- Исправлены ошибки линтера в `vite.config.ts` (добавлен `node:` протокол)
+- Исправлено форматирование в `package.json`
+- Создан документ `docs/types-design-rationale.md` с обоснованием использования интерфейсов
+
+_Заметки о ходе реализации будут добавляться здесь_
