@@ -99,15 +99,20 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 	}));
 
 	const handleReady = () => {
-		// Выполняем отложенный seekTo, если он был
-		if (pendingSeekRef.current !== null) {
-			const pending = pendingSeekRef.current;
-			setTimeout(() => {
-				if (performSeek(pending)) {
-					pendingSeekRef.current = null;
-				}
-			}, 100);
-		}
+		if (pendingSeekRef.current === null) return;
+
+		const trySeek = (attemptsLeft: number) => {
+			if (pendingSeekRef.current === null) return;
+			if (performSeek(pendingSeekRef.current)) {
+				pendingSeekRef.current = null;
+				return;
+			}
+			if (attemptsLeft > 0) {
+				requestAnimationFrame(() => trySeek(attemptsLeft - 1));
+			}
+		};
+
+		trySeek(30);
 	};
 
 	return (
