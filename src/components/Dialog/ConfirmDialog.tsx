@@ -4,32 +4,26 @@ import { useNotesStore, useVideoStore } from "@store";
 import { useState } from "react";
 import styles from "./Dialog.module.css";
 
-interface ConfirmDialogProps {
-	type: "video" | "note";
-	id: string | number;
-	title: string;
-	description: string;
-}
+type ConfirmDialogProps =
+	| { type: "video"; id: string; title: string; description: string }
+	| { type: "note"; id: number; title: string; description: string };
 
 export const ConfirmDialog = ({ type, id, title, description }: ConfirmDialogProps) => {
 	const [open, setOpen] = useState(false);
-	const { removeVideo, setPlaying: setVideoPlaying } = useVideoStore();
-	const { removeNote } = useNotesStore();
+	const setPlaying = useVideoStore((s) => s.setPlaying);
+	const removeVideo = useVideoStore((s) => s.removeVideo);
+	const removeNote = useNotesStore((s) => s.removeNote);
 
 	const handleOpenChange = (newOpen: boolean) => {
 		setOpen(newOpen);
-		if (newOpen) {
-			setVideoPlaying(false);
-		} else {
-			setVideoPlaying(true);
-		}
+		setPlaying(!newOpen);
 	};
 
 	const handleConfirm = async () => {
 		if (type === "video") {
-			await removeVideo(id as string);
+			await removeVideo(id);
 		} else {
-			await removeNote(id as number);
+			await removeNote(id);
 		}
 		setOpen(false);
 	};

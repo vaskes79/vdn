@@ -4,41 +4,28 @@ import { useNotesStore, useVideoStore } from "@store";
 import { useState } from "react";
 import styles from "./Dialog.module.css";
 
-interface EditDialogProps {
-	type: "video" | "note";
-	id: string | number;
-	title: string;
-	label: string;
-	description?: string;
-}
+type EditDialogProps =
+	| { type: "video"; id: string; title: string; label: string; description?: string }
+	| { type: "note"; id: number; title: string; label: string; description?: string };
 
-export const EditDialog = ({
-	type,
-	id,
-	title: initialTitle,
-	label,
-	description,
-}: EditDialogProps) => {
+export const EditDialog = ({ type, id, title: initialTitle, label, description }: EditDialogProps) => {
 	const [open, setOpen] = useState(false);
 	const [title, setTitle] = useState(initialTitle);
-	const { editVideo, setPlaying: setVideoPlaying } = useVideoStore();
-	const { editNote } = useNotesStore();
+	const setPlaying = useVideoStore((s) => s.setPlaying);
+	const editVideo = useVideoStore((s) => s.editVideo);
+	const editNote = useNotesStore((s) => s.editNote);
 
 	const handleOpenChange = (newOpen: boolean) => {
 		setOpen(newOpen);
-		if (newOpen) {
-			setVideoPlaying(false);
-			setTitle(initialTitle);
-		} else {
-			setVideoPlaying(true);
-		}
+		setPlaying(!newOpen);
+		if (newOpen) setTitle(initialTitle);
 	};
 
 	const handleSubmit = async () => {
 		if (type === "video") {
-			await editVideo(id as string, title);
+			await editVideo(id, title);
 		} else {
-			await editNote(id as number, title);
+			await editNote(id, title);
 		}
 		setOpen(false);
 	};
