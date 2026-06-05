@@ -12,7 +12,7 @@ interface ExportSettings {
 }
 
 export const ExportControls = () => {
-	const { notes } = useNotesStore();
+	const notes = useNotesStore((s) => s.notes);
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const [exportSettings, setExportSettings] = useState<ExportSettings>({
 		exportHtml: true,

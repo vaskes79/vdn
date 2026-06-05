@@ -15,7 +15,9 @@ interface ReactPlayerRef {
 }
 
 export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
-	const { currentVideoUrl, isPlaying, setPlaying } = useVideoStore();
+	const currentVideoUrl = useVideoStore((s) => s.currentVideoUrl);
+	const isPlaying = useVideoStore((s) => s.isPlaying);
+	const setPlaying = useVideoStore((s) => s.setPlaying);
 	const reactPlayerRef = useRef<ReactPlayerRef | null>(null);
 	const pendingSeekRef = useRef<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);

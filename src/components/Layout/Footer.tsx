@@ -18,7 +18,7 @@ const About = () => {
 
 const InfoDialog = () => {
 	const [open, setOpen] = useState(false);
-	const { setPlaying } = useVideoStore();
+	const setPlaying = useVideoStore((s) => s.setPlaying);
 
 	const handleOpenChange = (newOpen: boolean) => {
 		setOpen(newOpen);

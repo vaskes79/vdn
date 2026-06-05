@@ -10,8 +10,8 @@ interface SidebarItemProps {
 }
 
 export const SidebarItem = ({ video }: SidebarItemProps) => {
-	const { setCurrentVideo } = useVideoStore();
-	const { setSidebarOpen } = useAppStore();
+	const setCurrentVideo = useVideoStore((s) => s.setCurrentVideo);
+	const setSidebarOpen = useAppStore((s) => s.setSidebarOpen);
 
 	const handleClick = () => {
 		setSidebarOpen(false);
