@@ -1,19 +1,33 @@
+import { toast } from "./toast";
+
 export function getVideoUrlWithTime(url: string, time: number): string {
 	const seconds = Math.round(time);
 
-	if (url.includes("youtu")) {
-		const videoId = url.split("be/")[1] || url.split("v=")[1]?.split("&")[0];
-		return `https://www.youtube.com/watch?t=${seconds}&v=${videoId}`;
-	}
+	try {
+		const u = new URL(url);
+		const segments = u.pathname.split("/").filter(Boolean);
 
-	if (url.includes("vimeo")) {
-		const videoId = url.split("com/")[1];
-		return `https://vimeo.com/${videoId}#t=${seconds}`;
+		if (u.hostname.includes("youtube") || u.hostname === "youtu.be") {
+			const videoId = u.searchParams.get("v") ?? segments.pop();
+			return `https://www.youtube.com/watch?v=${videoId}&t=${seconds}`;
+		}
+
+		if (u.hostname.includes("vimeo")) {
+			const videoId = segments.pop();
+			return `https://vimeo.com/${videoId}#t=${seconds}`;
+		}
+	} catch (error) {
+		toast(`Invalid video URL: ${url}`, "error");
 	}
 
 	return url;
 }
 
 export function isValidVideoUrl(url: string): boolean {
-	return /youtu\.?be|vimeo/.test(url);
+	try {
+		const { hostname } = new URL(url);
+		return hostname.includes("youtube") || hostname === "youtu.be" || hostname.includes("vimeo");
+	} catch {
+		return false;
+	}
 }

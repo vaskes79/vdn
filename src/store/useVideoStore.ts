@@ -1,5 +1,6 @@
 import { settingsService, videoService } from "@services";
 import type { VideoStoreActions, VideoStoreState } from "@types";
+import { toast } from "@utils/toast";
 import { create } from "zustand";
 
 type VideoStore = VideoStoreState & VideoStoreActions;
@@ -41,6 +42,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 		await settingsService.setCurrentVideo(nextUrl);
 		await get().loadVideos();
 		set({ currentVideoUrl: nextUrl });
+		toast("Video removed");
 	},
 
 	editVideo: async (url: string, title: string) => {

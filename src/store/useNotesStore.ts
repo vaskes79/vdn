@@ -1,5 +1,6 @@
 import { noteService, settingsService } from "@services";
 import type { NotesStoreActions, NotesStoreState } from "@types";
+import { toast } from "@utils/toast";
 import { create } from "zustand";
 import { useVideoStore } from "./useVideoStore";
 
@@ -28,6 +29,7 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
 		const url = useVideoStore.getState().currentVideoUrl;
 		await noteService.remove(id);
 		await get().loadNotes(url);
+		toast("Note removed");
 	},
 
 	editNote: async (id: number, title: string) => {

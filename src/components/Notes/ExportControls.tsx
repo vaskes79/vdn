@@ -1,7 +1,7 @@
 import { GearIcon } from "@radix-ui/react-icons";
 import { settingsService } from "@services";
 import { useNotesStore } from "@store";
-import { copyToClipboard, formatToHtml, formatToMarkdown, formatToText } from "@utils";
+import { copyToClipboard, formatToHtml, formatToMarkdown, formatToText, toast } from "@utils";
 import { useEffect, useState } from "react";
 import styles from "./Notes.module.css";
 
@@ -49,6 +49,7 @@ export const ExportControls = () => {
 				text = formatToMarkdown(notes);
 		}
 		await copyToClipboard(text);
+		toast(`Copied as ${format}`);
 	};
 
 	return (

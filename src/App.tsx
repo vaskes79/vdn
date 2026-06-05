@@ -1,6 +1,7 @@
 import { EmptyState, Footer, Main, MainLeft, MainRight } from "@components/Layout";
 import { NavBar } from "@components/NavBar";
 import { Notes } from "@components/Notes";
+import { Toaster } from "@components/Toaster";
 import type { PlayerInstance } from "@components/Video/PlayerContext";
 import { PlayerContext } from "@components/Video/PlayerContext";
 import { useNotesStore, useVideoStore } from "@store";
@@ -71,6 +72,7 @@ export function App() {
 				</Main>
 			)}
 			<Footer />
+			<Toaster />
 		</PlayerContext.Provider>
 	);
 }
