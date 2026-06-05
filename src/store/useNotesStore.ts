@@ -21,6 +21,22 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
 		}
 	},
 
+	bulkAddNotes: async (url, timestamps) => {
+		if (!timestamps.length) return;
+		try {
+			set({ isLoading: true });
+			for (const { time, title } of timestamps) {
+				await noteService.add({ url, title, time });
+			}
+			await get().loadNotes(url);
+			toast(`Imported ${timestamps.length} timestamps`);
+		} catch {
+			toast("Failed to import timestamps", "error");
+		} finally {
+			set({ isLoading: false });
+		}
+	},
+
 	addNote: async (title: string, time: number) => {
 		const url = useVideoStore.getState().currentVideoUrl;
 		try {

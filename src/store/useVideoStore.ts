@@ -34,20 +34,22 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 		}
 	},
 
-	addVideo: async (url: string, title: string) => {
+	addVideo: async (url: string, title: string): Promise<boolean> => {
 		try {
 			const exists = await videoService.exists(url);
 			if (exists) {
 				toast("This video is already in your list", "error");
-				return;
+				return false;
 			}
 			set({ isLoading: true });
 			await videoService.add({ url, title });
 			await settingsService.setCurrentVideo(url);
 			await get().loadVideos();
 			set({ currentVideoUrl: url });
+			return true;
 		} catch {
 			toast("Failed to add video", "error");
+			return false;
 		} finally {
 			set({ isLoading: false });
 		}

@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { useVideoStore } from "@store";
-import { isValidVideoUrl } from "@utils";
+import { useNotesStore, useVideoStore } from "@store";
+import { fetchTimestamps, isValidVideoUrl } from "@utils";
 import { useState } from "react";
 import styles from "./Dialog.module.css";
 
@@ -29,13 +29,20 @@ export const AddVideoDialog = ({ triggerClassName }: AddVideoDialogProps) => {
 	};
 
 	const handleSubmit = async () => {
-		if (!title.trim() || !url.trim() || !isValidVideoUrl(url)) {
-			return;
-		}
-		await addVideo(url, title);
+		if (!title.trim() || !url.trim() || !isValidVideoUrl(url)) return;
+
+		const success = await addVideo(url, title);
+		if (!success) return;
+
 		setOpen(false);
 		setTitle("");
 		setUrl("");
+
+		fetchTimestamps(url).then((timestamps) => {
+			if (timestamps.length > 0) {
+				useNotesStore.getState().bulkAddNotes(url, timestamps);
+			}
+		});
 	};
 
 	return (

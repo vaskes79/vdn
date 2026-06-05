@@ -13,7 +13,7 @@ export interface VideoStoreActions {
 	setCurrentVideo: (url: string) => Promise<void>;
 	setPlaying: (playing: boolean) => void;
 	loadVideos: () => Promise<void>;
-	addVideo: (url: string, title: string) => Promise<void>;
+	addVideo: (url: string, title: string) => Promise<boolean>;
 	removeVideo: (url: string) => Promise<void>;
 	editVideo: (url: string, title: string) => Promise<void>;
 }
@@ -26,6 +26,7 @@ export interface NotesStoreState {
 export interface NotesStoreActions {
 	loadNotes: (url: string) => Promise<void>;
 	addNote: (title: string, time: number) => Promise<void>;
+	bulkAddNotes: (url: string, timestamps: Array<{ time: number; title: string }>) => Promise<void>;
 	removeNote: (id: number) => Promise<void>;
 	editNote: (id: number, title: string) => Promise<void>;
 }
