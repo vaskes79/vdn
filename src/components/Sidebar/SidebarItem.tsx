@@ -13,9 +13,9 @@ export const SidebarItem = ({ video }: SidebarItemProps) => {
 	const { setCurrentVideo } = useVideoStore();
 	const { setSidebarOpen } = useAppStore();
 
-	const handleClick = async () => {
-		await setCurrentVideo(video.url);
+	const handleClick = () => {
 		setSidebarOpen(false);
+		setCurrentVideo(video.url);
 	};
 
 	return (
