@@ -6,6 +6,7 @@ export interface VideoStoreState {
 	isPlaying: boolean;
 	videos: Video[];
 	isLoaded: boolean;
+	isLoading: boolean;
 }
 
 export interface VideoStoreActions {
@@ -19,6 +20,7 @@ export interface VideoStoreActions {
 
 export interface NotesStoreState {
 	notes: Note[];
+	isLoading: boolean;
 }
 
 export interface NotesStoreActions {

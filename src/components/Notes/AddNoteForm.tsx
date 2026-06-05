@@ -5,8 +5,9 @@ import styles from "./Notes.module.css";
 
 export const AddNoteForm = () => {
 	const [note, setNote] = useState("");
-	const { addNote } = useNotesStore();
-	const { setPlaying } = useVideoStore();
+	const addNote = useNotesStore((s) => s.addNote);
+	const isLoading = useNotesStore((s) => s.isLoading);
+	const setPlaying = useVideoStore((s) => s.setPlaying);
 	const { getCurrentTime } = usePlayer();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +34,7 @@ export const AddNoteForm = () => {
 				placeholder="Add new note"
 				value={note}
 				onChange={handleChange}
+				disabled={isLoading}
 			/>
 		</form>
 	);

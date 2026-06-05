@@ -1,4 +1,4 @@
-import { EmptyState, Footer, Main, MainLeft, MainRight } from "@components/Layout";
+import { EmptyState, ErrorBoundary, Footer, Main, MainLeft, MainRight } from "@components/Layout";
 import { NavBar } from "@components/NavBar";
 import { Notes } from "@components/Notes";
 import { Toaster } from "@components/Toaster";
@@ -41,6 +41,7 @@ export function App() {
 	const isEmpty = isLoaded && videos.length === 0;
 
 	return (
+		<ErrorBoundary>
 		<PlayerContext.Provider value={playerContextValue}>
 			<NavBar />
 			{isEmpty ? (
@@ -74,5 +75,6 @@ export function App() {
 			<Footer />
 			<Toaster />
 		</PlayerContext.Provider>
+		</ErrorBoundary>
 	);
 }

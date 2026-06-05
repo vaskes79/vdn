@@ -166,3 +166,44 @@
 .emptyStateButton:hover {
 	background: #0052a3;
 }
+
+.errorBoundary {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	padding: 32px;
+	text-align: center;
+}
+
+.errorBoundaryTitle {
+	font-size: 1.5rem;
+	font-weight: 600;
+	margin: 0;
+	color: #333;
+}
+
+.errorBoundaryMessage {
+	font-size: 0.9rem;
+	color: #888;
+	margin: 0;
+	max-width: 400px;
+}
+
+.errorBoundaryButton {
+	padding: 10px 20px;
+	background: #0066cc;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 0.95rem;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	margin-top: 8px;
+}
+
+.errorBoundaryButton:hover {
+	background: #0052a3;
+}

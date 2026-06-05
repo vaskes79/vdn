@@ -13,7 +13,9 @@ export const AddVideoDialog = ({ triggerClassName }: AddVideoDialogProps) => {
 	const [open, setOpen] = useState(false);
 	const [title, setTitle] = useState("");
 	const [url, setUrl] = useState("");
-	const { addVideo, setPlaying } = useVideoStore();
+	const addVideo = useVideoStore((s) => s.addVideo);
+	const setPlaying = useVideoStore((s) => s.setPlaying);
+	const isLoading = useVideoStore((s) => s.isLoading);
 
 	const handleOpenChange = (newOpen: boolean) => {
 		setOpen(newOpen);
@@ -86,7 +88,7 @@ export const AddVideoDialog = ({ triggerClassName }: AddVideoDialogProps) => {
 							className={`${styles.button} ${styles.primary}`}
 							type="button"
 							onClick={handleSubmit}
-							disabled={!title.trim() || !url.trim() || !isValidVideoUrl(url)}
+							disabled={!title.trim() || !url.trim() || !isValidVideoUrl(url) || isLoading}
 						>
 							Add Video
 						</button>
