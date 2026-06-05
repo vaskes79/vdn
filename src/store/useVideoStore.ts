@@ -29,6 +29,11 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 	},
 
 	addVideo: async (url: string, title: string) => {
+		const exists = await videoService.exists(url);
+		if (exists) {
+			toast("This video is already in your list", "error");
+			return;
+		}
 		await videoService.add({ url, title });
 		await settingsService.setCurrentVideo(url);
 		await get().loadVideos();
