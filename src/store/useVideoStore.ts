@@ -9,6 +9,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 	currentVideoUrl: "",
 	isPlaying: false,
 	videos: [],
+	isLoaded: false,
 
 	// Actions
 	setCurrentVideo: async (url: string) => {
@@ -23,7 +24,7 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 	loadVideos: async () => {
 		const videos = await videoService.getAll();
 		const currentUrl = await settingsService.getCurrentVideo();
-		set({ videos, currentVideoUrl: currentUrl });
+		set({ videos, currentVideoUrl: currentUrl, isLoaded: true });
 	},
 
 	addVideo: async (url: string, title: string) => {
@@ -35,10 +36,11 @@ export const useVideoStore = create<VideoStore>((set, get) => ({
 
 	removeVideo: async (url: string) => {
 		await videoService.remove(url);
-		const defaultUrl = "https://youtu.be/cCOL7MC4Pl0";
-		await settingsService.setCurrentVideo(defaultUrl);
+		const remaining = get().videos.filter((v) => v.url !== url);
+		const nextUrl = remaining[0]?.url ?? "";
+		await settingsService.setCurrentVideo(nextUrl);
 		await get().loadVideos();
-		set({ currentVideoUrl: defaultUrl });
+		set({ currentVideoUrl: nextUrl });
 	},
 
 	editVideo: async (url: string, title: string) => {

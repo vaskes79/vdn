@@ -1,9 +1,8 @@
-import { Footer, Main, MainLeft, MainRight } from "@components/Layout";
+import { EmptyState, Footer, Main, MainLeft, MainRight } from "@components/Layout";
 import { NavBar } from "@components/NavBar";
 import { Notes } from "@components/Notes";
 import type { PlayerInstance } from "@components/Video/PlayerContext";
 import { PlayerContext } from "@components/Video/PlayerContext";
-import { seedDatabase } from "@db";
 import { useNotesStore, useVideoStore } from "@store";
 import { lazy, Suspense, useEffect, useRef } from "react";
 
@@ -14,12 +13,12 @@ const VideoPlayer = lazy(() =>
 );
 
 export function App() {
-	const { currentVideoUrl, loadVideos } = useVideoStore();
+	const { currentVideoUrl, loadVideos, videos, isLoaded } = useVideoStore();
 	const { loadNotes } = useNotesStore();
 	const playerRef = useRef<PlayerInstance>(null);
 
 	useEffect(() => {
-		seedDatabase().then(() => loadVideos());
+		loadVideos();
 	}, [loadVideos]);
 
 	useEffect(() => {
@@ -38,33 +37,39 @@ export function App() {
 		},
 	};
 
+	const isEmpty = isLoaded && videos.length === 0;
+
 	return (
 		<PlayerContext.Provider value={playerContextValue}>
 			<NavBar />
-			<Main>
-				<MainLeft>
-					<Suspense
-						fallback={
-							<div
-								style={{
-									width: "100%",
-									height: `${window.innerHeight - 150}px`,
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
-								}}
-							>
-								Загрузка плеера...
-							</div>
-						}
-					>
-						<VideoPlayer ref={playerRef} />
-					</Suspense>
-				</MainLeft>
-				<MainRight>
-					<Notes />
-				</MainRight>
-			</Main>
+			{isEmpty ? (
+				<EmptyState />
+			) : (
+				<Main>
+					<MainLeft>
+						<Suspense
+							fallback={
+								<div
+									style={{
+										width: "100%",
+										height: `${window.innerHeight - 150}px`,
+										display: "flex",
+										alignItems: "center",
+										justifyContent: "center",
+									}}
+								>
+									Загрузка плеера...
+								</div>
+							}
+						>
+							<VideoPlayer ref={playerRef} />
+						</Suspense>
+					</MainLeft>
+					<MainRight>
+						<Notes />
+					</MainRight>
+				</Main>
+			)}
 			<Footer />
 		</PlayerContext.Provider>
 	);

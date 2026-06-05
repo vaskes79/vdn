@@ -2,7 +2,7 @@ import { db } from "@db";
 import type { AppSettings } from "@types";
 
 const DEFAULT_SETTINGS: AppSettings = {
-	currentVideo: "https://youtu.be/cCOL7MC4Pl0",
+	currentVideo: "",
 	timeOffset: 3,
 	exportHtml: true,
 	exportMd: true,
