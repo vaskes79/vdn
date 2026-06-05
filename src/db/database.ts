@@ -1,5 +1,5 @@
+import type { Note, Setting, Video } from "@types";
 import Dexie, { type Table } from "dexie";
-import type { Video, Note, Setting } from "@types";
 
 export class VdnDatabase extends Dexie {
 	videos!: Table<Video, string>;

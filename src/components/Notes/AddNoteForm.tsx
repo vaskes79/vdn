@@ -1,6 +1,6 @@
-import { useState, FormEvent } from "react";
-import { useNotesStore, useVideoStore } from "@store";
 import { usePlayer } from "@components/Video/PlayerContext";
+import { useNotesStore, useVideoStore } from "@store";
+import { type FormEvent, useState } from "react";
 import styles from "./Notes.module.css";
 
 export const AddNoteForm = () => {

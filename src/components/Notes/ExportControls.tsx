@@ -1,6 +1,6 @@
-import { useRef } from "react";
 import { useNotesStore } from "@store";
-import { formatToHtml, formatToMarkdown, formatToText, copyToClipboard } from "@utils";
+import { copyToClipboard, formatToHtml, formatToMarkdown, formatToText } from "@utils";
+import { useRef } from "react";
 import styles from "./Notes.module.css";
 
 export const ExportControls = () => {
@@ -45,6 +45,7 @@ export const ExportControls = () => {
 				ref={textareaRef}
 				className={styles.controlsHiddenField}
 				defaultValue=""
+				tabIndex={-1}
 				aria-hidden="true"
 			/>
 		</div>

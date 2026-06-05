@@ -1,5 +1,5 @@
-import { Sidebar } from "@components/Sidebar";
 import { AddVideoDialog } from "@components/Dialog";
+import { Sidebar } from "@components/Sidebar";
 import styles from "./NavBar.module.css";
 
 export const NavBar = () => {

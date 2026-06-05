@@ -1,5 +1,5 @@
+import type { AppStoreActions, AppStoreState } from "@types";
 import { create } from "zustand";
-import type { AppStoreState, AppStoreActions } from "@types";
 
 type AppStore = AppStoreState & AppStoreActions;
 

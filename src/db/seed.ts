@@ -1,5 +1,5 @@
+import type { Note, Setting, Video } from "@types";
 import { db } from "./database";
-import type { Video, Note, Setting } from "@types";
 
 const DEMO_VIDEO: Video = {
 	url: "https://youtu.be/cCOL7MC4Pl0",

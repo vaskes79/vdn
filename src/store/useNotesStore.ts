@@ -1,7 +1,7 @@
-import { create } from "zustand";
 import { noteService, settingsService } from "@services";
+import type { NotesStoreActions, NotesStoreState } from "@types";
+import { create } from "zustand";
 import { useVideoStore } from "./useVideoStore";
-import type { NotesStoreState, NotesStoreActions } from "@types";
 
 type NotesStore = NotesStoreState & NotesStoreActions;
 

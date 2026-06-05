@@ -1,7 +1,7 @@
-import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 import { useVideoStore } from "@store";
+import { useState } from "react";
 import styles from "./Layout.module.css";
 
 const About = () => {

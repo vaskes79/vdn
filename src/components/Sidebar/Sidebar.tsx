@@ -1,8 +1,8 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { useAppStore, useVideoStore } from "@store";
-import { SidebarItem } from "./SidebarItem";
 import styles from "./Sidebar.module.css";
+import { SidebarItem } from "./SidebarItem";
 
 export const Sidebar = () => {
 	const { sidebarOpen, setSidebarOpen } = useAppStore();

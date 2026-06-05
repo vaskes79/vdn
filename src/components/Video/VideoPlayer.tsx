@@ -1,17 +1,28 @@
-import { forwardRef, useRef, useImperativeHandle, useCallback } from "react";
-import ReactPlayer from "react-player";
 import { useVideoStore } from "@store";
+import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import ReactPlayer from "react-player";
 import type { PlayerInstance } from "./PlayerContext";
 import styles from "./VideoPlayer.module.css";
 
+interface ReactPlayerRef {
+	seekTo?: (amount: number, type?: string) => void;
+	getCurrentTime?: () => number;
+	getInternalPlayer?: () => { seekTo?: (amount: number, type?: boolean) => void } | null;
+	api?: {
+		seekTo: (amount: number, type?: boolean) => void;
+		getCurrentTime: () => number;
+	};
+}
+
 export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 	const { currentVideoUrl, isPlaying, setPlaying } = useVideoStore();
-	const reactPlayerRef = useRef<any>(null);
+	const reactPlayerRef = useRef<ReactPlayerRef | null>(null);
 	const pendingSeekRef = useRef<number | null>(null);
 
-	// Callback ref для ReactPlayer
-	const setReactPlayerRef = useCallback((player: any) => {
-		reactPlayerRef.current = player;
+	// Callback ref для ReactPlayer — react-player v3 типизирует ref как HTMLVideoElement,
+	// но в рантайме передаёт инстанс ReactPlayer, поэтому кастуем
+	const setReactPlayerRef = useCallback((player: HTMLVideoElement | null) => {
+		reactPlayerRef.current = player as unknown as ReactPlayerRef | null;
 	}, []);
 
 	const performSeek = useCallback((seconds: number) => {
@@ -26,7 +37,7 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 			try {
 				player.seekTo(seconds, "seconds");
 				return true;
-			} catch (error) {
+			} catch (_error) {
 				// Игнорируем ошибку, пробуем следующий способ
 			}
 		}
@@ -36,7 +47,7 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 			try {
 				player.api.seekTo(seconds, true);
 				return true;
-			} catch (error) {
+			} catch (_error) {
 				// Игнорируем ошибку, пробуем следующий способ
 			}
 		}
@@ -49,7 +60,7 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 					internalPlayer.seekTo(seconds, true);
 					return true;
 				}
-			} catch (error) {
+			} catch (_error) {
 				// Игнорируем ошибку
 			}
 		}
@@ -90,8 +101,9 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 	const handleReady = () => {
 		// Выполняем отложенный seekTo, если он был
 		if (pendingSeekRef.current !== null) {
+			const pending = pendingSeekRef.current;
 			setTimeout(() => {
-				if (performSeek(pendingSeekRef.current!)) {
+				if (performSeek(pending)) {
 					pendingSeekRef.current = null;
 				}
 			}, 100);

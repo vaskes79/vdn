@@ -3,9 +3,9 @@
 	"files": {
 		"includes": [
 			"**",
-			"!**/src_backup/**",
-			"!**/node_modules/**",
-			"!**/dist/**",
+			"!**/src_backup",
+			"!**/node_modules",
+			"!**/dist",
 			"!**/.tern-project",
 			"!**/public/manifest.json"
 		]

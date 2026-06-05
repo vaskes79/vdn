@@ -1,6 +1,6 @@
+import { settingsService, videoService } from "@services";
+import type { VideoStoreActions, VideoStoreState } from "@types";
 import { create } from "zustand";
-import { videoService, settingsService } from "@services";
-import type { VideoStoreState, VideoStoreActions } from "@types";
 
 type VideoStore = VideoStoreState & VideoStoreActions;
 

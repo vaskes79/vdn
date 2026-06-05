@@ -1,11 +1,11 @@
-import { useEffect, useRef, Suspense, lazy } from "react";
-import { seedDatabase } from "@db";
-import { useVideoStore, useNotesStore } from "@store";
-import { PlayerContext } from "@components/Video/PlayerContext";
+import { Footer, Main, MainLeft, MainRight } from "@components/Layout";
 import { NavBar } from "@components/NavBar";
-import { Main, MainLeft, MainRight, Footer } from "@components/Layout";
 import { Notes } from "@components/Notes";
 import type { PlayerInstance } from "@components/Video/PlayerContext";
+import { PlayerContext } from "@components/Video/PlayerContext";
+import { seedDatabase } from "@db";
+import { useNotesStore, useVideoStore } from "@store";
+import { lazy, Suspense, useEffect, useRef } from "react";
 
 const VideoPlayer = lazy(() =>
 	import("@components/Video").then((module) => ({

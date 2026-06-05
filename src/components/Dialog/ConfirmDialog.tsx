@@ -1,7 +1,7 @@
-import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { TrashIcon } from "@radix-ui/react-icons";
-import { useVideoStore, useNotesStore } from "@store";
+import { useNotesStore, useVideoStore } from "@store";
+import { useState } from "react";
 import styles from "./Dialog.module.css";
 
 interface ConfirmDialogProps {

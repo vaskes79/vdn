@@ -1,7 +1,7 @@
+import { ConfirmDialog, EditDialog } from "@components/Dialog";
 import { usePlayer } from "@components/Video/PlayerContext";
-import { EditDialog, ConfirmDialog } from "@components/Dialog";
-import { formatTime } from "@utils";
 import type { Note } from "@types";
+import { formatTime } from "@utils";
 import styles from "./Notes.module.css";
 
 interface NoteItemProps {

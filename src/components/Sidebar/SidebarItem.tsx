@@ -1,6 +1,5 @@
-import { useVideoStore, useAppStore } from "@store";
-import { EditDialog } from "@components/Dialog";
-import { ConfirmDialog } from "@components/Dialog";
+import { ConfirmDialog, EditDialog } from "@components/Dialog";
+import { useAppStore, useVideoStore } from "@store";
 import styles from "./Sidebar.module.css";
 
 interface SidebarItemProps {
