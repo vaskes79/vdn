@@ -1,5 +1,5 @@
 import { useVideoStore } from "@store";
-import { forwardRef, useCallback, useImperativeHandle, useRef } from "react";
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import type { PlayerInstance } from "./PlayerContext";
 import styles from "./VideoPlayer.module.css";
@@ -18,6 +18,20 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 	const { currentVideoUrl, isPlaying, setPlaying } = useVideoStore();
 	const reactPlayerRef = useRef<ReactPlayerRef | null>(null);
 	const pendingSeekRef = useRef<number | null>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [playerHeight, setPlayerHeight] = useState(0);
+
+	useEffect(() => {
+		const el = containerRef.current;
+		if (!el) return;
+
+		const ro = new ResizeObserver(([entry]) => {
+			setPlayerHeight(entry.contentRect.height);
+		});
+
+		ro.observe(el);
+		return () => ro.disconnect();
+	}, []);
 
 	// Callback ref для ReactPlayer — react-player v3 типизирует ref как HTMLVideoElement,
 	// но в рантайме передаёт инстанс ReactPlayer, поэтому кастуем
@@ -116,18 +130,20 @@ export const VideoPlayer = forwardRef<PlayerInstance>((_, ref) => {
 	};
 
 	return (
-		<div className={styles.root}>
-			<ReactPlayer
-				ref={setReactPlayerRef}
-				src={currentVideoUrl}
-				width="100%"
-				height={`${window.innerHeight - 150}px`}
-				controls
-				playing={isPlaying}
-				onPlay={() => setPlaying(true)}
-				onPause={() => setPlaying(false)}
-				onReady={handleReady}
-			/>
+		<div ref={containerRef} className={styles.root}>
+			{playerHeight > 0 && (
+				<ReactPlayer
+					ref={setReactPlayerRef}
+					src={currentVideoUrl}
+					width="100%"
+					height={playerHeight}
+					controls
+					playing={isPlaying}
+					onPlay={() => setPlaying(true)}
+					onPause={() => setPlaying(false)}
+					onReady={handleReady}
+				/>
+			)}
 		</div>
 	);
 });

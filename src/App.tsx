@@ -53,7 +53,7 @@ export function App() {
 								<div
 									style={{
 										width: "100%",
-										height: `${window.innerHeight - 150}px`,
+										flex: 1,
 										display: "flex",
 										alignItems: "center",
 										justifyContent: "center",
