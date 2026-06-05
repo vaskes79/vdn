@@ -5,8 +5,10 @@ import styles from "./Sidebar.module.css";
 import { SidebarItem } from "./SidebarItem";
 
 export const Sidebar = () => {
-	const { sidebarOpen, setSidebarOpen } = useAppStore();
-	const { videos, setPlaying } = useVideoStore();
+	const sidebarOpen = useAppStore((s) => s.sidebarOpen);
+	const setSidebarOpen = useAppStore((s) => s.setSidebarOpen);
+	const videos = useVideoStore((s) => s.videos);
+	const setPlaying = useVideoStore((s) => s.setPlaying);
 
 	const handleOpenChange = (open: boolean) => {
 		setSidebarOpen(open);

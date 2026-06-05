@@ -14,8 +14,11 @@ const VideoPlayer = lazy(() =>
 );
 
 export function App() {
-	const { currentVideoUrl, loadVideos, videos, isLoaded } = useVideoStore();
-	const { loadNotes } = useNotesStore();
+	const currentVideoUrl = useVideoStore((s) => s.currentVideoUrl);
+	const loadVideos = useVideoStore((s) => s.loadVideos);
+	const videos = useVideoStore((s) => s.videos);
+	const isLoaded = useVideoStore((s) => s.isLoaded);
+	const loadNotes = useNotesStore((s) => s.loadNotes);
 	const playerRef = useRef<PlayerInstance>(null);
 
 	useEffect(() => {

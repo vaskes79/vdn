@@ -11,7 +11,7 @@ export const AddNoteForm = () => {
 	const { getCurrentTime } = usePlayer();
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setPlaying(false);
+		if (!note) setPlaying(false);
 		setNote(e.target.value);
 	};
 
