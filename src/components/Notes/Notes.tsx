@@ -5,7 +5,7 @@ import { NoteItem } from "./NoteItem";
 import styles from "./Notes.module.css";
 
 export const Notes = () => {
-	const { notes } = useNotesStore();
+	const notes = useNotesStore((s) => s.notes);
 
 	return (
 		<div className={styles.root}>

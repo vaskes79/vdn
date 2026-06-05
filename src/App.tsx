@@ -5,7 +5,7 @@ import { Toaster } from "@components/Toaster";
 import type { PlayerInstance } from "@components/Video/PlayerContext";
 import { PlayerContext } from "@components/Video/PlayerContext";
 import { useNotesStore, useVideoStore } from "@store";
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef } from "react";
 
 const VideoPlayer = lazy(() =>
 	import("@components/Video").then((module) => ({
@@ -31,15 +31,14 @@ export function App() {
 		}
 	}, [currentVideoUrl, loadNotes]);
 
-	const playerContextValue = {
-		player: playerRef,
-		getCurrentTime: () => {
-			return playerRef.current?.getCurrentTime() || 0;
-		},
-		seekTo: (seconds: number) => {
-			playerRef.current?.seekTo(seconds);
-		},
-	};
+	const playerContextValue = useMemo(
+		() => ({
+			player: playerRef,
+			getCurrentTime: () => playerRef.current?.getCurrentTime() || 0,
+			seekTo: (seconds: number) => playerRef.current?.seekTo(seconds),
+		}),
+		[],
+	);
 
 	const isEmpty = isLoaded && videos.length === 0;
 

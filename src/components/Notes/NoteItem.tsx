@@ -2,13 +2,14 @@ import { ConfirmDialog, EditDialog } from "@components/Dialog";
 import { usePlayer } from "@components/Video/PlayerContext";
 import type { Note } from "@types";
 import { formatTime } from "@utils";
+import { memo } from "react";
 import styles from "./Notes.module.css";
 
 interface NoteItemProps {
 	note: Note;
 }
 
-export const NoteItem = ({ note }: NoteItemProps) => {
+export const NoteItem = memo(({ note }: NoteItemProps) => {
 	const playerContext = usePlayer();
 	const { seekTo } = playerContext;
 	const timeString = formatTime(note.time);
@@ -46,4 +47,4 @@ export const NoteItem = ({ note }: NoteItemProps) => {
 			</div>
 		</div>
 	);
-};
+});
