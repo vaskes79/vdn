@@ -1,15 +1,9 @@
-const INSTANCES = [
-	"https://inv.nadeko.net",
-	"https://invidious.nerdvpn.de",
-	"https://invidious.privacyredirect.com",
-];
-
 export interface ParsedTimestamp {
 	time: number;
 	title: string;
 }
 
-function extractYoutubeId(url: string): string | null {
+export function extractYoutubeId(url: string): string | null {
 	try {
 		const u = new URL(url);
 		if (u.hostname.includes("youtube.com")) return u.searchParams.get("v");
@@ -33,25 +27,4 @@ export function parseTimestamps(text: string): ParsedTimestamp[] {
 	}
 
 	return results;
-}
-
-export async function fetchTimestamps(url: string): Promise<ParsedTimestamp[]> {
-	const videoId = extractYoutubeId(url);
-	if (!videoId) return [];
-
-	for (const instance of INSTANCES) {
-		try {
-			const res = await fetch(`${instance}/api/v1/videos/${videoId}?fields=description`, {
-				signal: AbortSignal.timeout(5000),
-			});
-			if (!res.ok) continue;
-			const data = await res.json();
-			if (!data.description) return [];
-			return parseTimestamps(data.description);
-		} catch {
-			continue;
-		}
-	}
-
-	return [];
 }
