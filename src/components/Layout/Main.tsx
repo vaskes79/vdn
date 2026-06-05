@@ -23,4 +23,3 @@ interface MainRightProps {
 export const MainRight = ({ children }: MainRightProps) => {
 	return <div className={styles.mainRight}>{children}</div>;
 };
-

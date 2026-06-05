@@ -1,9 +1,9 @@
-import { db } from '@db';
-import type { Note, NoteInput } from '@types';
+import { db } from "@db";
+import type { Note, NoteInput } from "@types";
 
 export const noteService = {
 	async getByUrl(url: string): Promise<Note[]> {
-		return db.notes.where('url').equals(url).sortBy('time');
+		return db.notes.where("url").equals(url).sortBy("time");
 	},
 
 	async getAll(): Promise<Note[]> {
@@ -22,4 +22,3 @@ export const noteService = {
 		await db.notes.update(id, { title });
 	},
 };
-

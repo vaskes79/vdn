@@ -66,4 +66,3 @@ export const ConfirmDialog = ({ type, id, title, description }: ConfirmDialogPro
 		</Dialog.Root>
 	);
 };
-

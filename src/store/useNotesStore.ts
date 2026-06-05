@@ -36,4 +36,3 @@ export const useNotesStore = create<NotesStore>((set, get) => ({
 		await get().loadNotes(url);
 	},
 }));
-

@@ -25,20 +25,9 @@ export const SidebarItem = ({ video }: SidebarItemProps) => {
 				<span className={styles.itemTitle}>{video.title}</span>
 			</button>
 			<div className={styles.itemActions}>
-				<EditDialog
-					type="video"
-					id={video.url}
-					title={video.title}
-					label="Change Title"
-				/>
-				<ConfirmDialog
-					type="video"
-					id={video.url}
-					title={video.title}
-					description={video.url}
-				/>
+				<EditDialog type="video" id={video.url} title={video.title} label="Change Title" />
+				<ConfirmDialog type="video" id={video.url} title={video.title} description={video.url} />
 			</div>
 		</div>
 	);
 };
-

@@ -1,17 +1,16 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
 	"files": {
-		"ignore": [
-			"src_backup/**",
-			"node_modules/**",
-			"dist/**",
-			".tern-project",
-			"public/manifest.json"
+		"includes": [
+			"**",
+			"!**/src_backup/**",
+			"!**/node_modules/**",
+			"!**/dist/**",
+			"!**/.tern-project",
+			"!**/public/manifest.json"
 		]
 	},
-	"organizeImports": {
-		"enabled": true
-	},
+	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"linter": {
 		"enabled": true,
 		"rules": {

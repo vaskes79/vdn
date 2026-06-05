@@ -1,3 +1,2 @@
-export { db, VdnDatabase } from './database';
-export { seedDatabase } from './seed';
-
+export { db, VdnDatabase } from "./database";
+export { seedDatabase } from "./seed";

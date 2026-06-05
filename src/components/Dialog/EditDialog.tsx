@@ -12,7 +12,13 @@ interface EditDialogProps {
 	description?: string;
 }
 
-export const EditDialog = ({ type, id, title: initialTitle, label, description }: EditDialogProps) => {
+export const EditDialog = ({
+	type,
+	id,
+	title: initialTitle,
+	label,
+	description,
+}: EditDialogProps) => {
 	const [open, setOpen] = useState(false);
 	const [title, setTitle] = useState(initialTitle);
 	const { editVideo, setPlaying: setVideoPlaying } = useVideoStore();
@@ -80,4 +86,3 @@ export const EditDialog = ({ type, id, title: initialTitle, label, description }
 		</Dialog.Root>
 	);
 };
-

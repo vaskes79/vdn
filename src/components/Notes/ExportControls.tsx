@@ -28,18 +28,10 @@ export const ExportControls = () => {
 
 	return (
 		<div className={styles.controls}>
-			<button
-				className={styles.exportButton}
-				type="button"
-				onClick={() => handleExport("HTML")}
-			>
+			<button className={styles.exportButton} type="button" onClick={() => handleExport("HTML")}>
 				HTML
 			</button>
-			<button
-				className={styles.exportButton}
-				type="button"
-				onClick={() => handleExport("Text")}
-			>
+			<button className={styles.exportButton} type="button" onClick={() => handleExport("Text")}>
 				TEXT
 			</button>
 			<button
@@ -58,4 +50,3 @@ export const ExportControls = () => {
 		</div>
 	);
 };
-

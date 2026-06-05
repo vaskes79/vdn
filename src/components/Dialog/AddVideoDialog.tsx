@@ -39,7 +39,11 @@ export const AddVideoDialog = ({ triggerClassName }: AddVideoDialogProps) => {
 	return (
 		<Dialog.Root open={open} onOpenChange={handleOpenChange}>
 			<Dialog.Trigger asChild>
-				<button className={triggerClassName || styles.iconButton} type="button" aria-label="Add video">
+				<button
+					className={triggerClassName || styles.iconButton}
+					type="button"
+					aria-label="Add video"
+				>
 					<PlusIcon />
 				</button>
 			</Dialog.Trigger>
@@ -92,4 +96,3 @@ export const AddVideoDialog = ({ triggerClassName }: AddVideoDialogProps) => {
 		</Dialog.Root>
 	);
 };
-
