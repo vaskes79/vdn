@@ -7,8 +7,50 @@
 
 .controls {
 	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.controlsRow {
+	display: flex;
 	gap: 8px;
 	flex-wrap: wrap;
+	align-items: center;
+}
+
+.settingsToggle {
+	margin-left: auto;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #666;
+	transition: color 0.2s;
+	border-radius: 4px;
+}
+
+.settingsToggle:hover {
+	color: #000;
+}
+
+.controlsSettings {
+	display: flex;
+	gap: 16px;
+	padding: 8px 4px;
+	border-top: 1px solid #eee;
+}
+
+.settingsLabel {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 0.875rem;
+	color: #444;
+	cursor: pointer;
+	user-select: none;
 }
 
 .exportButton {
