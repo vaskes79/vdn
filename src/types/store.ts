@@ -5,6 +5,7 @@ export interface VideoStoreState {
 	currentVideoUrl: string;
 	isPlaying: boolean;
 	videos: Video[];
+	isLoaded: boolean;
 }
 
 export interface VideoStoreActions {
